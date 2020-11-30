@@ -1,4 +1,5 @@
 Library
-Temp/
+Temp
 Logs
-ProjectSettings/
+ProjectSettings
+Packages
