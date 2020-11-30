@@ -1,1 +1,8 @@
 Library
+Temp
+Logs
+ProjectSettings
+Packages
+.idea/
+obj/
+Prj.sln
