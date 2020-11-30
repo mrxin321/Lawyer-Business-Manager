@@ -12,7 +12,7 @@ namespace Assets.CustomAssets.Scripts.Foundation.Editor
 {
     public class Tools
     {
-        [MenuItem("Tools/创建界面", false, 3000)]
+        [MenuItem("Tools/创建界面")]
         public static void CreateUI()
         {
         	var assetName = "TestPrefab";
@@ -44,6 +44,20 @@ namespace Assets.CustomAssets.Scripts.Foundation.Editor
  
             AssetDatabase.Refresh();
         }
+
+        [MenuItem("Tools/生成映射资源文件")]
+        public static void CreateAssetName2Path()
+        {
+            var tool = new AssetNameBuildList();
+            tool.GetBuildList(true);
+        }
+
+        [UnityEditor.Callbacks.DidReloadScripts(0)]
+	    static void OnScriptReload()
+	    {
+	    	Debug.Log("脚本编译完毕");
+            CreateAssetName2Path();
+	    }
     }
  
 }
