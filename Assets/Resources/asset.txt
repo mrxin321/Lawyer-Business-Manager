@@ -5,3 +5,4 @@ testprefab:prefab:View/TestPrefab.prefab:assets___resources___view.resource
 testprefab 1:prefab:View/TestPrefab 1.prefab:assets___resources___view.resource
 testprefab 2:prefab:View/TestPrefab 2.prefab:assets___resources___view.resource
 testprefab 3:prefab:View/TestPrefab 3.prefab:assets___resources___view.resource
+testprefab 4:prefab:View/TestPrefab 4.prefab:assets___resources___view.resource
