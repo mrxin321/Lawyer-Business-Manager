@@ -1,8 +1,7 @@
-loginview:prefab:UI/Login/LoginView.prefab:assets___resources___ui.resource
-pagemain:prefab:UI/PageMain.prefab:assets___resources___ui.resource
-welcomeview:prefab:UI/WelcomeView.prefab:assets___resources___ui.resource
-testprefab:prefab:View/TestPrefab.prefab:assets___resources___view.resource
-testprefab 1:prefab:View/TestPrefab 1.prefab:assets___resources___view.resource
-testprefab 2:prefab:View/TestPrefab 2.prefab:assets___resources___view.resource
-testprefab 3:prefab:View/TestPrefab 3.prefab:assets___resources___view.resource
-testprefab 4:prefab:View/TestPrefab 4.prefab:assets___resources___view.resource
+loginview:prefab:View/Login/LoginView.prefab:assets___resources___view.resource
+mainview:prefab:View/MainView.prefab:assets___resources___view.resource
+newcaseview:prefab:View/NewCaseView.prefab:assets___resources___view.resource
+newstageview:prefab:View/NewStageView.prefab:assets___resources___view.resource
+pagemain:prefab:View/PageMain.prefab:assets___resources___view.resource
+stagechooseview:prefab:View/StageChooseView.prefab:assets___resources___view.resource
+welcomeview:prefab:View/WelcomeView.prefab:assets___resources___view.resource

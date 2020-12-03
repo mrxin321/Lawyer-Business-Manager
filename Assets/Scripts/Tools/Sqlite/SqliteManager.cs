@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using Assets.CustomAssets.Scripts.Foundation.Common;
 using Mono.Data.Sqlite;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -42,7 +41,7 @@ namespace Assets.CustomAssets.Scripts.Tools.Sqlite
         {
             if (dbConnection == null)
             {
-                EDebug.LogError("=================数据库文件还没开启，请先开启");
+                Debug.LogError("=================数据库文件还没开启，请先开启");
                 return null;
             }
             if (dbConnection.State != ConnectionState.Open) OpenDB();
@@ -60,7 +59,7 @@ namespace Assets.CustomAssets.Scripts.Tools.Sqlite
                 }
                 catch (Exception e)
                 {
-                    EDebug.LogError(" ============ Sqlite ExecuteQuery Error : " + e.Message);
+                    Debug.LogError(" ============ Sqlite ExecuteQuery Error : " + e.Message);
                     transaction.Rollback(); //回滚事务
                 }
             }
@@ -100,12 +99,12 @@ namespace Assets.CustomAssets.Scripts.Tools.Sqlite
             Assert.IsTrue(string.IsNullOrEmpty(tableName),"==============请输入正确的tableName");
             if (dbConnection == null)
             {
-                EDebug.LogError("=================数据库文件还没开启，请先开启");
+                Debug.LogError("=================数据库文件还没开启，请先开启");
                 return null;
             }
             if (colNames.Length != colTypes.Length)
             {
-                EDebug.LogError("=================colNames And colTypes 长度不一致，无法创建数据表");
+                Debug.LogError("=================colNames And colTypes 长度不一致，无法创建数据表");
                 return null;
             }
             
@@ -147,6 +146,7 @@ namespace Assets.CustomAssets.Scripts.Tools.Sqlite
         public void OpenDBFile(string dbFile)
         {
             _curDbpath = Application.persistentDataPath + "/" + dbFile + ".db";
+            Debug.LogFormat("wtf 数据库位置 {0}",_curDbpath);
             FileInfo fileInfo = new FileInfo (_curDbpath);
             if (!fileInfo.Exists)
             {
@@ -196,7 +196,7 @@ namespace Assets.CustomAssets.Scripts.Tools.Sqlite
             
             if (colName.Length != paramTable.Count)
             {
-                EDebug.LogError("=================colNames And paramTable 长度不一致");
+                Debug.LogError("=================colNames And paramTable 长度不一致");
                 return null;
             }
 
