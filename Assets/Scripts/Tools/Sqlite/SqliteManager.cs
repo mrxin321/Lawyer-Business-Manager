@@ -227,15 +227,19 @@ namespace Assets.CustomAssets.Scripts.Tools.Sqlite
             return ExecuteQuery(tableName,addSqlStr);
         }
 
-
+        //所有选择
         public SqliteDataReader SelectAllParam(string tableName)
         {
             string selectSqlStr = String.Format("SELECT * FROM {0}",tableName);
             return ExecuteQuery(tableName,selectSqlStr);
         }
-        
-        
-        
+    
+        //条件查询        
+        public SqliteDataReader SelectParam(string tableName,string param,string value)
+        {
+            string selectSqlStr = String.Format("SELECT * FROM {0} where {1} = {2}",tableName,param,value);
+            return ExecuteQuery(tableName,selectSqlStr);
+        }
 
     }
 }
