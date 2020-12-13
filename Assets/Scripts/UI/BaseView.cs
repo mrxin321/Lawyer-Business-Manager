@@ -7,6 +7,7 @@ public class BaseView : MonoBehaviour
     // Start is called before the first frame update
     private Canvas mainCanvas;
     private static int Layer = 0;
+    public ViewType ViewType = ViewType.NormalView;
     void Start()
     {
     	if(mainCanvas == null)
@@ -17,8 +18,22 @@ public class BaseView : MonoBehaviour
     	mainCanvas.sortingOrder = Layer;
     }
 
-    public void onClose()
+    public void Close()
     {
-    	GameObject.Destroy(gameObject);
+    	// GameObject.Destroy(gameObject);
+    	UIManager.Instance.CloseWindow(this);
     }
+
+    private object[] Params;
+    public object[] GetParams()
+    {
+    	return Params;
+    }
+    public void SetParams(params object[] args)
+    {
+    	Params = args;
+    }
+
+    public virtual void Refresh()
+    {}
 }

@@ -25,7 +25,7 @@ public class SwitchButtonEditor : ButtonEditor
         {
             var go = (GameObject)ViewObj.objectReferenceValue;
             if(go != null)UIName.stringValue = go.name;
-            ViewObj.objectReferenceValue = null;
+            // ViewObj.objectReferenceValue = null;
         }
         
 

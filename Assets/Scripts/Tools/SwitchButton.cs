@@ -17,7 +17,7 @@ public class SwitchButton : Button
 
 	protected override void OnDisable()
 	{
-		onClick.AddListener(OpenWindow);
+		onClick.RemoveListener(OpenWindow);
 	}
 
     private void OpenWindow()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class SqlConfig
 {
 
-    public static string myDB = "slggamedb";
+    public static string myDB = "lbmdb";
     
     public const string testTableBlock =
         "CREATE TABLE {0}(id integer primary key autoincrement unique not null,testId integer,content text,state integer)";

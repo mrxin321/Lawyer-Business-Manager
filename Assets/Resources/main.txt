@@ -1,0 +1,215 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : slggamedb
+ Source Server Type    : SQLite
+ Source Server Version : 3030001
+ Source Schema         : main
+
+ Target Server Type    : SQLite
+ Target Server Version : 3030001
+ File Encoding         : 65001
+
+ Date: 07/12/2020 01:09:38
+*/
+
+PRAGMA foreign_keys = false;
+
+-- ----------------------------
+-- Table structure for case
+-- ----------------------------
+DROP TABLE IF EXISTS "case";
+CREATE TABLE "case" (
+  "Id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "name" TEXT,
+  "des" TEXT,
+  "master" integer,
+  "contractid" INTEGER,
+  "customerid" INTEGER,
+  "content" TEXT
+);
+
+-- ----------------------------
+-- Records of case
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for customer
+-- ----------------------------
+DROP TABLE IF EXISTS "customer";
+CREATE TABLE "customer" (
+  "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "name" TEXT,
+  "tel" integer,
+  "des" TEXT
+);
+
+-- ----------------------------
+-- Records of customer
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for permission
+-- ----------------------------
+DROP TABLE IF EXISTS "permission";
+CREATE TABLE "permission" (
+  "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "type" integer,
+  "des" TEXT
+);
+
+-- ----------------------------
+-- Records of permission
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for sqlite_sequence
+-- ----------------------------
+DROP TABLE IF EXISTS "sqlite_sequence";
+CREATE TABLE sqlite_sequence(name,seq);
+
+-- ----------------------------
+-- Records of sqlite_sequence
+-- ----------------------------
+BEGIN;
+INSERT INTO "sqlite_sequence" VALUES ('test', 6);
+INSERT INTO "sqlite_sequence" VALUES ('stage', 0);
+INSERT INTO "sqlite_sequence" VALUES ('task', 0);
+INSERT INTO "sqlite_sequence" VALUES ('user', 1);
+INSERT INTO "sqlite_sequence" VALUES ('case', 60);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for stage
+-- ----------------------------
+DROP TABLE IF EXISTS "stage";
+CREATE TABLE "stage" (
+  "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "name" TEXT,
+  "des" TEXT,
+  "caseid" INTEGER NOT NULL
+);
+
+-- ----------------------------
+-- Records of stage
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for state
+-- ----------------------------
+DROP TABLE IF EXISTS "state";
+CREATE TABLE "state" (
+  "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "name" TEXT,
+  "progress" integer
+);
+
+-- ----------------------------
+-- Records of state
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for task
+-- ----------------------------
+DROP TABLE IF EXISTS "task";
+CREATE TABLE "task" (
+  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  " state" integer,
+  "content" TEXT,
+  "des" TEXT,
+  "stageid" INTEGER
+);
+
+-- ----------------------------
+-- Records of task
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for template
+-- ----------------------------
+DROP TABLE IF EXISTS "template";
+CREATE TABLE "template" (
+  "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "stageid" INTEGER NOT NULL,
+  "name" TEXT,
+  "originstate" integer
+);
+
+-- ----------------------------
+-- Records of template
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for test
+-- ----------------------------
+DROP TABLE IF EXISTS "test";
+CREATE TABLE test(id integer primary key autoincrement unique not null,testId integer,content text,state integer);
+
+-- ----------------------------
+-- Records of test
+-- ----------------------------
+BEGIN;
+INSERT INTO "test" VALUES (1, 23, '12/2/2020 11:37:41 PM', 0);
+INSERT INTO "test" VALUES (2, 83, '12/2/2020 11:38:54 PM', 0);
+INSERT INTO "test" VALUES (3, 12, '12/2/2020 11:39:01 PM', 0);
+INSERT INTO "test" VALUES (4, 45, '12/2/2020 11:39:21 PM', 0);
+INSERT INTO "test" VALUES (5, 2, '12/2/2020 11:39:21 PM', 0);
+INSERT INTO "test" VALUES (6, 22, '12/2/2020 11:39:31 PM', 0);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS "user";
+CREATE TABLE "user" (
+  "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "name" TEXT,
+  "password" TEXT,
+  "permission" integer
+);
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+BEGIN;
+INSERT INTO "user" VALUES (1, 'xin', 123456, 1);
+COMMIT;
+
+-- ----------------------------
+-- Auto increment value for case
+-- ----------------------------
+UPDATE "main"."sqlite_sequence" SET seq = 60 WHERE name = 'case';
+
+-- ----------------------------
+-- Auto increment value for stage
+-- ----------------------------
+
+-- ----------------------------
+-- Auto increment value for task
+-- ----------------------------
+
+-- ----------------------------
+-- Auto increment value for test
+-- ----------------------------
+UPDATE "main"."sqlite_sequence" SET seq = 6 WHERE name = 'test';
+
+-- ----------------------------
+-- Auto increment value for user
+-- ----------------------------
+UPDATE "main"."sqlite_sequence" SET seq = 1 WHERE name = 'user';
+
+PRAGMA foreign_keys = true;

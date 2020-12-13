@@ -11,6 +11,21 @@ public class AssetInfo
 
 public class AssetNameLoader
 {
+    private static AssetNameLoader _instance;
+
+    public static AssetNameLoader Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new AssetNameLoader(); 
+            }
+
+            return _instance;
+        }
+    }
+    
     private Dictionary<string, AssetInfo> _assetTextCache = new Dictionary<string, AssetInfo>();
     private Dictionary<string, List< AssetInfo>> _bundleListCache = new Dictionary<string, List< AssetInfo>>();
 

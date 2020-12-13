@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using Assets.CustomAssets.Scripts.Tools.Sqlite;
 using Mono.Data.Sqlite;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,7 +44,7 @@ public class SqliteTest : MonoBehaviour
         
 //         btn_Print.onClick.AddListener(delegate
 //         {
-//             SqliteDataReader dataReader= _sqliteManager.SelectAllParam(tableName);
+//             SqliteDataReader dataReader= _sqliteManager.SelectAllParam(-);
             
 //             string showContent = "";
 //             while(dataReader != null && dataReader.Read()) 

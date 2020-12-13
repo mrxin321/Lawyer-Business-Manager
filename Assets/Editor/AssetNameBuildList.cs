@@ -39,6 +39,11 @@ public class AssetNameBuildList
         SetOneFolderOneBundle(buildlist, BuildConfig.UIPrefabPath, BuildConfig.ResourcesFolder, "t:Prefab", true, true);
     }
 
+    private void SetTxt(List<AssetBundleBuild> buildlist)
+    {
+        SetOneFolderOneBundle(buildlist, BuildConfig.UIPrefabPath, BuildConfig.ResourcesFolder, "t:sql", true, true);
+    }
+
     private void SetOneFolderOneBundle(List<AssetBundleBuild> buildlist, string path, string splitTag, string filter,bool needWrite, bool buildDependencies, bool selfFolder = false)
     {
         string[] folders = null;
