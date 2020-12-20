@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BaseView : MonoBehaviour
 {
@@ -16,6 +17,14 @@ public class BaseView : MonoBehaviour
     	}
     	Layer += 1;
     	mainCanvas.sortingOrder = Layer;
+
+        var groupPanel = transform.Find("Group");
+        if(groupPanel != null)
+        {
+            var aspectRatioFitter = groupPanel.gameObject.GetComponentForce<AspectRatioFitter>();
+            var fitInParentWithMinMax = groupPanel.gameObject.GetComponentForce<FitInParentWithMinMax>();
+        }
+        
     }
 
     public void Close()

@@ -6,7 +6,7 @@ public class FitInParentWithMinMax : MonoBehaviour
 {
     #region Fields
 
-    public float MinWidthHighRate = 4/3.0f;
+    public float MinWidthHighRate = 0.48f;
 
     public float MaxWidthHighRate = 17.5f/9.0f;
 

@@ -17,4 +17,9 @@ public class UserView : BaseView
 	{
     	UIManager.Instance.OpenWindow("MyCaseListView");
 	}
+
+	public void OpenTempView()
+	{
+    	UIManager.Instance.OpenWindow("TempStageListView");
+	}
 }

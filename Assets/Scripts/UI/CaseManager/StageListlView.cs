@@ -14,11 +14,13 @@ public class StageListlView : BaseView
 	private void OnEnable()
 	{
 		UpdateView += Refresh;
+		TempStageChooseItem.TempStageAddSuccess += Refresh;
 	}
 
 	private void OnDisable()
 	{
 		UpdateView -= Refresh;
+		TempStageChooseItem.TempStageAddSuccess -= Refresh;
 	}
 
     public override void Refresh()
@@ -49,5 +51,10 @@ public class StageListlView : BaseView
 	public void StageAdd()
 	{
         UIManager.Instance.OpenWindow("StageEditView",CaseId);
+	}
+
+	public void TempAdd()
+	{
+        UIManager.Instance.OpenWindow("TempStageChooseListView",CaseId);
 	}
 }

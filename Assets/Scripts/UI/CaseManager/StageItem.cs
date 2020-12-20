@@ -9,11 +9,14 @@ public class StageItem : MonoBehaviour
 
 	private int StageId;
 	private int CaseId;
+    private StageData StageData;
 
     public void SetData(int stageId,int caseId)
     {
     	StageId = stageId;
     	CaseId = caseId;
+
+        ViewUtils.Print("wtf data tatata  {0}",stageId);
 
 		var dataReader = SqliteManager.Instance.SelectParam("stage",string.Format("select * from 'stage' where id = {0}",stageId));
 		while(dataReader != null && dataReader.Read())
@@ -33,7 +36,8 @@ public class StageItem : MonoBehaviour
     {
     	Hashtable hashtable = new Hashtable();
 		hashtable.Add(0,StageId);
-		SqliteManager.Instance.DeleteRecord("stage","id",hashtable);
+        SqliteManager.Instance.DeleteRecord("stage","id",hashtable);
+		SqliteManager.Instance.DeleteRecord("task","stageid",hashtable);
 
 		Utility.SafePostEvent(StageListlView.UpdateView);
     }

@@ -18,7 +18,7 @@ public class StageEditView : BaseView
 
 		if(StageId > 0)
 		{
-			var dataReader = SqliteManager.Instance.SelectParam("case",string.Format("select * from 'stage' where id = {0}",StageId));
+			var dataReader = SqliteManager.Instance.SelectParam("stage",string.Format("select * from 'stage' where id = {0}",StageId));
 			while(dataReader != null && dataReader.Read())
 			{
 				var stagename = dataReader.GetString(dataReader.GetOrdinal("name"));

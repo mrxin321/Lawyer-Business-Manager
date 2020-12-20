@@ -20,14 +20,17 @@ public class LoginView : BaseView
     public void OnLoginClick()
     {
     	var account = Account.text;
-    	var passworld = PassWorld.text;
+    	var password = PassWorld.text;
 
-    	var dataReader = SqliteManager.Instance.SelectParam("user",string.Format("select * from user where account = '{0}' and password = '{1}'",account,passworld));
+    	var dataReader = SqliteManager.Instance.SelectParam("user",string.Format("select * from user where account = '{0}' and password = '{1}'",account,password));
     	while(dataReader != null && dataReader.Read())
     	{
     		var userId = dataReader.GetInt32(dataReader.GetOrdinal("id"));
     		var permission = dataReader.GetInt32(dataReader.GetOrdinal("permission"));
     		var username = dataReader.GetString(dataReader.GetOrdinal("name"));
+
+            PlayerPrefs.SetString("UserId",account);
+            PlayerPrefs.SetString("PassWord",password);
 
     		PlayerDataManager.Instance.SetUserData(userId,username,permission);
 	    	

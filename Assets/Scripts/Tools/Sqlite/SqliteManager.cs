@@ -233,6 +233,21 @@ public  class SqliteManager
         return reader;
     }
 
+    public int GetLastInsertId(string tableName)
+    {
+        var insertId = -1;
+
+        var sql = "select last_insert_rowid() as id from " + tableName ;
+        var reader = SelectParam(tableName,sql);
+        while(reader != null && reader.Read())
+        {
+            insertId = reader.GetInt32(reader.GetOrdinal("id"));
+        }
+        reader.Close();
+
+        return insertId;
+    }
+
     public SqliteDataReader UpateValue(string tableName,string[] colName,Hashtable paramTable)
     {
         

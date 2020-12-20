@@ -24,11 +24,9 @@ public class UIManager : Singleton<UIManager>
 
 			if(baseView.ViewType == ViewType.NormalView)
 			{
-				Debug.LogFormat("wtf y藏界面1 {0}",UIList.Count);
 				if(UIList.Count > 0)
 				{
 					var lastWindow = UIList[UIList.Count - 1];
-				Debug.LogFormat("wtf y藏界面2 {0}",lastWindow);
 
 					if(lastWindow !=null && lastWindow.gameObject != null)
 					{
@@ -37,7 +35,8 @@ public class UIManager : Singleton<UIManager>
 				}
 			}
 
-			UIList.Add(baseView);
+			if(baseView.ViewType == ViewType.NormalView || baseView.ViewType == ViewType.SingleView)
+				UIList.Add(baseView);
 
 			return baseView;
 		}
@@ -53,11 +52,11 @@ public class UIManager : Singleton<UIManager>
 			{
 				GameObject.Destroy(baseview.gameObject);
 				UIList.RemoveAt(UIList.Count - 1);
-
+				
 				if(UIList.Count > 0)
 				{
 					var nextView = UIList[UIList.Count - 1];
-					if(nextView != null)
+					if(nextView != null && nextView.ViewType == ViewType.NormalView)
 					{
 						nextView.gameObject.SetActive(true);
 						nextView.Refresh();				

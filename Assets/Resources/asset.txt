@@ -1,7 +1,6 @@
 caseeditview:prefab:View/CaseManager/CaseEditView.prefab:assets___resources___view.resource
 caseitem:prefab:View/CaseManager/CaseItem.prefab:assets___resources___view.resource
 casetotalview:prefab:View/CaseManager/CaseTotalView.prefab:assets___resources___view.resource
-stagechooseview:prefab:View/CaseManager/StageChooseView.prefab:assets___resources___view.resource
 stageeditview:prefab:View/CaseManager/StageEditView.prefab:assets___resources___view.resource
 stageitem:prefab:View/CaseManager/StageItem.prefab:assets___resources___view.resource
 stagelistlview:prefab:View/CaseManager/StageListlView.prefab:assets___resources___view.resource
@@ -20,8 +19,11 @@ mytaskitem:prefab:View/MyCase/MyTaskItem.prefab:assets___resources___view.resour
 mytasklistview:prefab:View/MyCase/MyTaskListView.prefab:assets___resources___view.resource
 todoitem:prefab:View/MyCase/TodoItem.prefab:assets___resources___view.resource
 todolistview:prefab:View/MyCase/ToDoListView.prefab:assets___resources___view.resource
-templatestagemanagerview:prefab:View/TemplateManager/TemplateStageManagerView.prefab:assets___resources___view.resource
-templatetaskmanagerview:prefab:View/TemplateManager/TemplateTaskManagerView.prefab:assets___resources___view.resource
+tempstagechooseitem:prefab:View/TemplateManager/TempStageChooseItem.prefab:assets___resources___view.resource
+tempstagechooselistview:prefab:View/TemplateManager/TempStageChooseListView.prefab:assets___resources___view.resource
+tempstagelistview:prefab:View/TemplateManager/TempStageListView.prefab:assets___resources___view.resource
+temptasklistview:prefab:View/TemplateManager/TempTaskListView.prefab:assets___resources___view.resource
+bg:prefab:View/UIComponent/bg.prefab:assets___resources___view.resource
 button:prefab:View/UIComponent/Button.prefab:assets___resources___view.resource
 closebtn:prefab:View/UIComponent/CloseBtn.prefab:assets___resources___view.resource
 userview:prefab:View/UserView/UserView.prefab:assets___resources___view.resource
