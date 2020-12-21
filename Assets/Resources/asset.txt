@@ -7,7 +7,6 @@ stagelistlview:prefab:View/CaseManager/StageListlView.prefab:assets___resources_
 taskeditview:prefab:View/CaseManager/TaskEditView.prefab:assets___resources___view.resource
 taskitem:prefab:View/CaseManager/TaskItem.prefab:assets___resources___view.resource
 tasklistview:prefab:View/CaseManager/TaskListView.prefab:assets___resources___view.resource
-tasktem:prefab:View/CaseManager/Tasktem.prefab:assets___resources___view.resource
 messagetipsview:prefab:View/Common/MessageTipsView.prefab:assets___resources___view.resource
 loginview:prefab:View/Login/LoginView.prefab:assets___resources___view.resource
 registerview:prefab:View/Login/RegisterView.prefab:assets___resources___view.resource
@@ -26,5 +25,6 @@ temptasklistview:prefab:View/TemplateManager/TempTaskListView.prefab:assets___re
 bg:prefab:View/UIComponent/bg.prefab:assets___resources___view.resource
 button:prefab:View/UIComponent/Button.prefab:assets___resources___view.resource
 closebtn:prefab:View/UIComponent/CloseBtn.prefab:assets___resources___view.resource
+todoinputfield:prefab:View/UIComponent/TodoInputField.prefab:assets___resources___view.resource
 userview:prefab:View/UserView/UserView.prefab:assets___resources___view.resource
 welcomview:prefab:View/WelcomView.prefab:assets___resources___view.resource

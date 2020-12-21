@@ -31,7 +31,7 @@ public class TaskListView : BaseView
 		
 		var dataReader = SqliteManager.Instance.SelectParam("task","stageid",StageId.ToString());
 
-		var dataList = DataBase.GetDataList<TaskData>(dataReader,"id","content","des");
+		var dataList = DataBase.GetDataList<TaskData>(dataReader,"id","content","des","todocount");
 		foreach(var taskData in dataList)
     	{
 			var copyItem = AssetManager.CreatePrefab("TaskItem",ItemRoot);

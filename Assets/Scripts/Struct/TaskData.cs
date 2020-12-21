@@ -11,6 +11,10 @@ public class TaskData : DataBase
     public string Des;
     public string StageName;
     public string CaseName;
+    public int TodoCount;
+    public string Todo1;
+    public string Todo2;
+    public string Todo3;
 
     //数据填充
     public override DataBase GetData()
@@ -21,7 +25,11 @@ public class TaskData : DataBase
     	this.Content = GetString("content");
         this.Des = GetString("des");
         this.StageName = GetString("stagename");
-    	this.CaseName = GetString("casename");
+        this.CaseName = GetString("casename");
+        this.TodoCount = GetInt("todocount");
+        this.Todo1 = GetString("todo1");
+        this.Todo2 = GetString("todo2");
+    	this.Todo3 = GetString("todo3");
 
     	return (DataBase)this;
     }

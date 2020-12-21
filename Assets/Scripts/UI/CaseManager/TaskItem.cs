@@ -26,7 +26,7 @@ public class TaskItem : MonoBehaviour
 	{
 		var dataReader = SqliteManager.Instance.SelectParam("task","id",TaskData.Id.ToString());
 
-    	SetData(TaskData.GetTypeData<TaskData>(dataReader,"id","content","des"));
+    	SetData(TaskData.GetTypeData<TaskData>(dataReader,"id","content","des","todocount"));
 	}
 
     public void SetData(TaskData taskData)
