@@ -18,7 +18,7 @@ public class MyStageListView : BaseView
 		
 		var dataReader = SqliteManager.Instance.SelectParam("stage","caseid",CaseId.ToString());
 
-		var dataList = DataBase.GetDataList<StageData>(dataReader,"id","name","des","caseid");
+		var dataList = DataBase.GetDataList<StageData>(dataReader,"id","name","des","caseid","casetype");
 		foreach(var data in dataList)
     	{
 			var copyItem = AssetManager.CreatePrefab("MyStageItem",ItemRoot);

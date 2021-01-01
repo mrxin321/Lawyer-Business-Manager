@@ -22,4 +22,13 @@ public class UserView : BaseView
 	{
     	UIManager.Instance.OpenWindow("TempStageListView");
 	}
+
+	public void OutLoginClick()
+	{
+		Action action = delegate{
+			UIManager.Instance.CloseAllWindow();
+    		UIManager.Instance.OpenWindow("LoginView");
+		};
+    	UIManager.Instance.OpenWindow("MessageTipsConfirmView","是否要退出登录?",action);
+	}
 }

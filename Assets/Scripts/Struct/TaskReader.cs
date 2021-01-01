@@ -14,7 +14,7 @@ public class TaskReader
 
     public static List<TaskData> GetToDoList(int userId)
     {
-    	var sqlStr = @"SELECT * from task inner join (SELECT stage.id as findid,'case'.id as caseid,stage.name as stagename,'case'.name as casename FROM stage inner join 'case' on stage.caseid = 'case'.Id where 'case'.master = 3) where stageid = findid and state < 2 group by caseid";
+    	var sqlStr = @"SELECT * from task inner join (SELECT stage.id as findid,'case'.id as caseid,stage.name as stagename,'case'.name as casename FROM stage inner join 'case' on stage.caseid = 'case'.Id where 'case'.master = {0}) where stageid = findid and state < 2 group by caseid";
     	sqlStr = string.Format(sqlStr,userId);
 
         var dataReader = SqliteManager.Instance.SelectParam("task",sqlStr);
@@ -22,5 +22,11 @@ public class TaskReader
         var dataList = DataBase.GetDataList<TaskData>(dataReader,"id","content","des","stageid","state","casename","stagename");
 
         return dataList;
+    }
+
+    public static List<TaskData> GetTaskListByStageId(int stageId)
+    {
+        var dataReader = SqliteManager.Instance.SelectParam("task","stageid",stageId.ToString());
+        return DataBase.GetDataList<TaskData>(dataReader,"id","des","content","stageid","state","todocount","todo1","todo2","todo3");
     }
 }

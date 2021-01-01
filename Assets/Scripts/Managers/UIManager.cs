@@ -59,7 +59,7 @@ public class UIManager : Singleton<UIManager>
 					if(nextView != null && nextView.ViewType == ViewType.NormalView)
 					{
 						nextView.gameObject.SetActive(true);
-						nextView.Refresh();				
+						if(nextView.RefreshView)nextView.Refresh();		
 					}
 				}
 				return;
@@ -68,5 +68,14 @@ public class UIManager : Singleton<UIManager>
 			GameObject.Destroy(baseview.gameObject);
 			UIList.RemoveAt(UIList.Count - 1);
 		}
+	}
+
+	public void CloseAllWindow()
+	{
+		foreach(var item in UIList)
+		{
+			GameObject.Destroy(item.gameObject);
+		}
+		UIList.Clear();
 	}
 }

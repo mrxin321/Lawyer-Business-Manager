@@ -7,37 +7,35 @@ public class CaseItem : MonoBehaviour
 {
 	[SerializeField] Text CaseName;
 
-	private int CaseId;
+	private CaseData CaseData;
 
-    public void SetData(int caseId)
+    public void SetData(CaseData caseData)
     {
-    	CaseId = caseId;
-		var dataReader = SqliteManager.Instance.SelectParam("case",string.Format("select * from 'case' where id = {0}",caseId));
-		while(dataReader != null && dataReader.Read())
-    	{
-    		var casename = dataReader.GetString(dataReader.GetOrdinal("name"));
-    		CaseName.text = casename;
-    	}
-        dataReader.Close();
+    	CaseData = caseData;
+    	CaseName.text = caseData.Name;
     }
 
     public void CaseEdit()
     {
-    	UIManager.Instance.OpenWindow("CaseEditView",CaseId);
+    	UIManager.Instance.OpenWindow("CaseEditView",CaseData);
     }
 
     public void StateEdit()
     {
-        UIManager.Instance.OpenWindow("StageListlView",CaseId);
+        UIManager.Instance.OpenWindow("StageListlView",CaseData);
     }
     public void CaseDelete()
     {
     	Hashtable hashtable = new Hashtable();
-		hashtable.Add(0,CaseId);
-		SqliteManager.Instance.DeleteRecord("case","id",hashtable);
+		hashtable.Add(0,CaseData.Id);
+
+        var deleteSql = "delete from task where stageid in(select id from stage where stage.caseid = {0})";
+        SqliteManager.Instance.DeleteRecord("task",string.Format(deleteSql,CaseData.Id.ToString()));
+        
+        SqliteManager.Instance.DeleteRecord("case","id",hashtable);
+		SqliteManager.Instance.DeleteRecord("stage","caseid",hashtable);
+        
 
 		Utility.SafePostEvent(CaseTotalView.UpdateCaseView);
-
-		ViewUtils.Print("wtf safddasfasfsafasdf ");
     }
 }

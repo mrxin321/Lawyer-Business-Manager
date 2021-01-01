@@ -14,7 +14,7 @@ public class MyCaseListView : BaseView
 		
 		var dataReader = SqliteManager.Instance.SelectParam("case","master",myUserId.ToString());
 
-		var dataList = DataBase.GetDataList<CaseData>(dataReader,"id","name","des","content","master","contractid");
+		var dataList = DataBase.GetDataList<CaseData>(dataReader,"id","name","mask","content","master","contractid");
 		foreach(var taskData in dataList)
     	{
 			var copyItem = AssetManager.CreatePrefab("MyCaseItem",ItemRoot);

@@ -17,26 +17,26 @@ public class TempStageChooseListView : BaseView
 		TempStageChooseItem.TempStageAddSuccess -= Close;
 	}
 
-	private int CaseId;
+	private CaseData CaseData;
 
     public override void Refresh()
 	{
 		var _params = GetParams();
 
-		if(_params.Length >= 1)CaseId = (int)_params[0];
+		if(_params.Length >= 1)CaseData = (CaseData)_params[0];
 
 		Utility.DestroyAllChildren(ItemRoot);
 		
-		var dataReader = SqliteManager.Instance.SelectParam("stage","caseid","0");
-
-		var dataList = DataBase.GetDataList<StageData>(dataReader,"id","name","des");
+		var sqlStr = "SELECT * FROM 'stage' where caseid = 0 and casetype = {0}";
+		var dataReader = SqliteManager.Instance.SelectParam("stage",string.Format(sqlStr,CaseData.CaseType));
+		var dataList = DataBase.GetDataList<StageData>(dataReader,"id","name","des","casetype");
 		foreach(var stage in dataList)
 		{
 			var copyItem = AssetManager.CreatePrefab("TempStageChooseItem",ItemRoot);
 			var item = copyItem.GetComponent<TempStageChooseItem>();
 			if(item != null)
 			{
-				stage.CaseId = CaseId;
+				stage.CaseId = CaseData.Id;
 				item.SetData(stage);
 			}
 		}

@@ -83,7 +83,15 @@ public class DataBase
     		case "StageData":
     			data = new StageData();
     			break;
-    			
+    		case "CaseTypeData":
+    			data = new CaseTypeData();
+    			break;
+    		case "UserData":
+    			data = new UserData();
+    			break;
+    		case "PayTypeData":
+    			data = new PayTypeData();
+    			break;
     	}
     	return data as T;;
     }

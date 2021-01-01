@@ -43,4 +43,10 @@ public class LoginView : BaseView
     	
     	UIManager.Instance.OpenWindow("MessageTipsView","账号或者密码错误");
     }
+
+    public void OnRegisterClick()
+    {
+        Close();
+        UIManager.Instance.OpenWindow("RegisterView");
+    }
 }

@@ -253,6 +253,7 @@ public  class SqliteManager
         
         if (colName.Length != paramTable.Count)
         {
+            Debug.LogError("参数不对");
             return null;
         }
 
@@ -305,6 +306,13 @@ public  class SqliteManager
         var str = paramTable[0] is string?"'"+paramTable[0]+"'":paramTable[0];
         string selectSqlStr = String.Format("Delete from '{0}' where {1} = {2}",tableName,calname,str);
         var reader = ExecuteQuery(tableName,selectSqlStr);
+        reader.Close();
+        return reader;
+    }
+
+    public SqliteDataReader DeleteRecord(string tableName,string deleteSql)
+    {
+        var reader = ExecuteQuery(tableName,deleteSql);
         reader.Close();
         return reader;
     }

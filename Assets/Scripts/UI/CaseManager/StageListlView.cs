@@ -2,14 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StageListlView : BaseView
 {
 	public static Action UpdateView;
 
 	[SerializeField] Transform ItemRoot;
+	[SerializeField] Text CaseName;
 
-	private int CaseId;
+	private CaseData CaseData;
 
 	private void OnEnable()
 	{
@@ -26,35 +28,33 @@ public class StageListlView : BaseView
     public override void Refresh()
 	{
 		var _params = GetParams();
-		if(_params.Length >= 1)CaseId = (int)_params[0];
+		if(_params.Length >= 1)CaseData = (CaseData)_params[0];
 
 		Utility.DestroyAllChildren(ItemRoot);
 		
-		var dataReader = SqliteManager.Instance.SelectParam("stage","caseid",CaseId.ToString());
+		CaseName.text = CaseData.Name;
 
-    	while(dataReader != null && dataReader.Read())
+		var dataReader = SqliteManager.Instance.SelectParam("stage","caseid",CaseData.Id.ToString());
+		var dataList = DataBase.GetDataList<StageData>(dataReader,"id","name","des","caseid","casetype");
+		foreach(var data in dataList)
     	{
-    		var stageId = dataReader.GetInt32(dataReader.GetOrdinal("id"));
-    		var caseId = dataReader.GetInt32(dataReader.GetOrdinal("caseid"));
-    		
 			var castItem = AssetManager.CreatePrefab("StageItem",ItemRoot);
 
 			var item = castItem.GetComponent<StageItem>();
 			if(item != null)
 			{
-				item.SetData(stageId,caseId);
+				item.SetData(data);
 			}
     	}
-        dataReader.Close();
 	}
 
 	public void StageAdd()
 	{
-        UIManager.Instance.OpenWindow("StageEditView",CaseId);
+        UIManager.Instance.OpenWindow("StageEditView",CaseData.Id);
 	}
 
 	public void TempAdd()
 	{
-        UIManager.Instance.OpenWindow("TempStageChooseListView",CaseId);
+        UIManager.Instance.OpenWindow("TempStageChooseListView",CaseData);
 	}
 }

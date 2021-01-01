@@ -27,7 +27,6 @@ public class ToDoListView : BaseView
 
         //获取当前没有完结的案子的未完成任务
         var todoList = TaskReader.GetToDoList(PlayerDataManager.Instance.GetUserId());
-        Debug.LogFormat("wtf todoList {0}",todoList.Count);
 
         foreach(var taskData in todoList)
         {

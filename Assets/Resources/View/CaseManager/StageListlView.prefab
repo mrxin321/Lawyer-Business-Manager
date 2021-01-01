@@ -191,7 +191,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ViewType: 0
+  RefreshView: 1
   ItemRoot: {fileID: 1451565696917504101}
+  CaseName: {fileID: 4295543151098343201}
 --- !u!1 &1542025050222289550
 GameObject:
   m_ObjectHideFlags: 0

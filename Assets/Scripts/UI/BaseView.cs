@@ -9,6 +9,8 @@ public class BaseView : MonoBehaviour
     private Canvas mainCanvas;
     private static int Layer = 0;
     public ViewType ViewType = ViewType.NormalView;
+    public bool RefreshView = true;
+
     void Start()
     {
     	if(mainCanvas == null)

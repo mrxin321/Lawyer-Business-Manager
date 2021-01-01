@@ -277,7 +277,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ViewType: 0
+  RefreshView: 1
   ItemRoot: {fileID: 588117249959731790}
+  CaseName: {fileID: 4295543151098343201}
+  StageName: {fileID: 2090944145673803289}
 --- !u!1 &1509189443542725345
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +315,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 443, y: -168}
+  m_AnchoredPosition: {x: 436, y: -193}
   m_SizeDelta: {x: 800, y: 89.16998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &94355915760908230
@@ -487,7 +490,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 10
+  m_Spacing: 0
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -852,11 +855,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5948002878492669123}
-    - target: {fileID: 2942484355410156434, guid: 4792ed4b72c4a4a2faee8b10cd75b011,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Close
-      objectReference: {fileID: 0}
     - target: {fileID: 6139122768456608140, guid: 4792ed4b72c4a4a2faee8b10cd75b011,
         type: 3}
       propertyPath: m_Name

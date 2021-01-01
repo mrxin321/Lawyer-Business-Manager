@@ -54,7 +54,8 @@ public class MyTaskItem : MonoBehaviour
         //     temoData = new Dropdown.OptionData();
         //     temoData.text = names[i];
         //     d1.options.Add(temoData);
-        // }
+        // 
+        
     }
 
     private void InputFieldEndEdit(int todoIndex,string endStr)
@@ -87,5 +88,7 @@ public class MyTaskItem : MonoBehaviour
         var calNames1 = new string[]{"id","state"};
         
         SqliteManager.Instance.UpateValue("task",calNames1,hashtable);
+
+        Utility.SafePostEvent(MyStageItem.StageDataUpdate,TaskData.StageId);
     }
 }

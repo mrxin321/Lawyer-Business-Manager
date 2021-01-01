@@ -25,17 +25,14 @@ public class CaseTotalView : BaseView
 		
 		var dataReader = SqliteManager.Instance.SelectAllParam("case");
 
-    	while(dataReader != null && dataReader.Read())
+		var dataList = DataBase.GetDataList<CaseData>(dataReader,"id","name","mask","content","master","contractid","casetype","customer","plaintiff","defendant","other","institution","money","paytype","paydes","createtime");
+    	foreach(var data in dataList)
     	{
-    		var caseId = dataReader.GetInt32(dataReader.GetOrdinal("id"));
-    		var casename = dataReader.GetString(dataReader.GetOrdinal("name"));
-    		
 			var castItem = AssetManager.CreatePrefab("CaseItem",ItemRoot);
-
 			var item = castItem.GetComponent<CaseItem>();
 			if(item != null)
 			{
-				item.SetData(caseId);
+				item.SetData(data);
 			}
 
     	}

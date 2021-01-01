@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RegisterView : MonoBehaviour
+public class RegisterView : BaseView
 {
     [SerializeField] public InputField Account;
     [SerializeField] public InputField Name;
@@ -25,11 +25,19 @@ public class RegisterView : MonoBehaviour
 		hashtable.Add(2,password);
 		var calNames = new string[]{"account","name","password"};
 
+        var dataReader = SqliteManager.Instance.SelectParam("user","account",string.Format("'{0}'",Account.text));
+        var list = DataBase.GetDataList<UserData>(dataReader,"id","account");
+        if(list.Count > 0)
+        {
+            ViewUtils.MessageTips("账号重复了!!!");
+            return;
+        }
+
 		SqliteManager.Instance.InsertValue("user",calNames,hashtable);
     		
         PlayerPrefs.SetString("UserId",account);
         PlayerPrefs.SetString("PassWord",password);
-
+        Close();
     	UIManager.Instance.OpenWindow("LoginView");
     }
 }

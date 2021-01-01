@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class TodoItem : MonoBehaviour
 {
-    [SerializeField] Text StageName;
     [SerializeField] Text CaseName;
     [SerializeField] Text TaskContent;
 	[SerializeField] Dropdown Dropdown;
@@ -19,8 +18,7 @@ public class TodoItem : MonoBehaviour
         if(taskData != null)
         { 
             TaskContent.text = taskData.Content;
-            StageName.text = taskData.StageName;
-            CaseName.text = taskData.CaseName;
+            CaseName.text = string.Format("{0}的{1}",taskData.CaseName,taskData.StageName);
             Dropdown.value = taskData.State;
     	}
     }

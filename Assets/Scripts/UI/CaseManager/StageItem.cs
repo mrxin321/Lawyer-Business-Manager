@@ -11,31 +11,22 @@ public class StageItem : MonoBehaviour
 	private int CaseId;
     private StageData StageData;
 
-    public void SetData(int stageId,int caseId)
-    {
-    	StageId = stageId;
-    	CaseId = caseId;
+    public void SetData(StageData stageData)
+    { 
+    	StageData = stageData;
 
-        ViewUtils.Print("wtf data tatata  {0}",stageId);
-
-		var dataReader = SqliteManager.Instance.SelectParam("stage",string.Format("select * from 'stage' where id = {0}",stageId));
-		while(dataReader != null && dataReader.Read())
-    	{
-    		var stagename = dataReader.GetString(dataReader.GetOrdinal("name"));
-    		StageName.text = stagename;
-    	}
-    	dataReader.Close();
+		StageName.text = stageData.Name;
     }
 
     public void StateEdit()
     {
-        UIManager.Instance.OpenWindow("StageEditView",CaseId,StageId);
+        UIManager.Instance.OpenWindow("StageEditView",0,StageData);
     }
 
     public void StateDelete()
     {
     	Hashtable hashtable = new Hashtable();
-		hashtable.Add(0,StageId);
+		hashtable.Add(0,StageData.Id);
         SqliteManager.Instance.DeleteRecord("stage","id",hashtable);
 		SqliteManager.Instance.DeleteRecord("task","stageid",hashtable);
 
@@ -44,6 +35,6 @@ public class StageItem : MonoBehaviour
 
     public void TaskList()
     {
-        UIManager.Instance.OpenWindow("TaskListView",StageId);
+        UIManager.Instance.OpenWindow("TaskListView",StageData);
     }
 }

@@ -7,43 +7,63 @@ public class StageEditView : BaseView
 {	
 	[SerializeField] InputField StageName;
 	[SerializeField] InputField Des;
-    private int CaseId;
-	private int StageId;
+	[SerializeField] Dropdown Dropdown;
+	[SerializeField] Text BtnText;
+
+	private int CaseId;
+    private StageData StageData;
+
+	private List<CaseTypeData> CaseTypeList;
 
 	public override void Refresh()
 	{
+		var caseType = PlayerPrefs.GetInt("InserStageCaseType",1);
 		var _params = GetParams();
 		if(_params.Length >= 1)CaseId = (int)_params[0];
-		if(_params.Length >= 2)StageId = (int)_params[1];
+		if(_params.Length >= 2)StageData = (StageData)_params[1];
 
-		if(StageId > 0)
+		if(StageData != null)
 		{
-			var dataReader = SqliteManager.Instance.SelectParam("stage",string.Format("select * from 'stage' where id = {0}",StageId));
-			while(dataReader != null && dataReader.Read())
-			{
-				var stagename = dataReader.GetString(dataReader.GetOrdinal("name"));
-				StageName.text = stagename;
-
-				var des = dataReader.GetString(dataReader.GetOrdinal("des"));
-				Des.text = des.ToString();
-			}
-			dataReader.Close();
+			BtnText.text = "修改阶段";
+			StageName.text = StageData.Name;
+			Des.text = StageData.Des;
+			caseType = StageData.CaseType;
 		}
+
+		var dataReader_ = SqliteManager.Instance.SelectAllParam("casetype");
+
+		var dataList = DataBase.GetDataList<CaseTypeData>(dataReader_,"id","name");
+		CaseTypeList = dataList;
+		Dropdown.options.Clear();
+
+	   	for (int i = 0; i < dataList.Count; i++)
+	    {
+	       	var temoData = new Dropdown.OptionData();
+	       	temoData.text = dataList[i].Name;
+	        Dropdown.options.Add(temoData);
+
+	        if(caseType == dataList[i].Id)Dropdown.value = i;
+	    }
 	}   
 	
 	public void StageEdit()
 	{
-		if(StageName.text == "")ViewUtils.MessageTips("阶段名字不能空哦");
+		if(StageName.text == "")
+		{
+			ViewUtils.MessageTips("阶段名字不能空哦");
+			return;
+		}
 
 		Hashtable hashtable = new Hashtable();
 
-		if(StageId > 0)
+		if(StageData != null)
 		{
-			hashtable.Add(0,StageId);
+			hashtable.Add(0,StageData.Id);
 			hashtable.Add(1,StageName.text);
-	        hashtable.Add(2,CaseId);
+	        hashtable.Add(2,StageData.CaseId);
 	        hashtable.Add(3,Des.text);
-			var calNames1 = new string[]{"id","name","caseid","des"};
+	        hashtable.Add(4,CaseTypeList[Dropdown.value].Id);
+			var calNames1 = new string[]{"id","name","caseid","des","casetype"};
 	        
 			SqliteManager.Instance.UpateValue("stage",calNames1,hashtable);
 			Utility.SafePostEvent(StageListlView.UpdateView);
@@ -54,12 +74,14 @@ public class StageEditView : BaseView
 		hashtable.Add(0,StageName.text);
         hashtable.Add(1,CaseId);
         hashtable.Add(2,Des.text);
-		var calNames = new string[]{"name","caseid","des"};
+	    hashtable.Add(3,CaseTypeList[Dropdown.value].Id);
+		var calNames = new string[]{"name","caseid","des","casetype"};
 
 		SqliteManager.Instance.InsertValue("stage",calNames,hashtable);
 		Utility.SafePostEvent(StageListlView.UpdateView);
 		Close();
 
+		PlayerPrefs.SetInt("InserStageCaseType",CaseTypeList[Dropdown.value].Id);
 	} 
 
 }

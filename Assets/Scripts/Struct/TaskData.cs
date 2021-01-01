@@ -10,6 +10,7 @@ public class TaskData : DataBase
     public string Content;
     public string Des;
     public string StageName;
+    public int CaseId;
     public string CaseName;
     public int TodoCount;
     public string Todo1;
@@ -25,6 +26,7 @@ public class TaskData : DataBase
     	this.Content = GetString("content");
         this.Des = GetString("des");
         this.StageName = GetString("stagename");
+        this.CaseId = GetInt("caseid");
         this.CaseName = GetString("casename");
         this.TodoCount = GetInt("todocount");
         this.Todo1 = GetString("todo1");
