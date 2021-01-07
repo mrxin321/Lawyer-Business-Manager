@@ -21,6 +21,6 @@ public class StartGame : MonoBehaviour
         	}
 
         	UIManager.Instance.OpenWindow("LoginView");
-        },2,this);
+        },4,this);
     }
 }
