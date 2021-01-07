@@ -27,10 +27,10 @@ public class TempStageChooseItem : MonoBehaviour
         hashtable.Add(2,StageData.Des);
 		var calNames = new string[]{"name","caseid","des"};
 
-		SqliteManager.Instance.InsertValue("stage",calNames,hashtable);
+		var stageId = SqliteManager.Instance.InsertValue("stage",calNames,hashtable);
 
 		//获取最新id
-		var stageId = SqliteManager.Instance.GetLastInsertId("stage");
+		// var stageId = SqliteManager.Instance.GetLastInsertId("stage");
 
 		if(stageId > 0)
 		{

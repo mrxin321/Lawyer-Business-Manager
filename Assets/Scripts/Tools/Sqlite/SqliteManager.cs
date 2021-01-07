@@ -201,13 +201,13 @@ public  class SqliteManager
     }
 
 
-    public SqliteDataReader InsertValue(string tableName,string[] colName,Hashtable paramTable)
+    public int InsertValue(string tableName,string[] colName,Hashtable paramTable)
     {
         
         if (colName.Length != paramTable.Count)
         {
             Debug.LogError("=================colNames And paramTable 长度不一致");
-            return null;
+            return -1;
         }
 
         string colStr = "";
@@ -236,8 +236,11 @@ public  class SqliteManager
         string addSqlStr = string.Format("INSERT INTO '{0}' ({1}) VALUES({2})", tableName,colStr,paramStr);
         var reader = ExecuteQuery(tableName,addSqlStr);
         reader.Close();
+
+        var id = SqliteManager.Instance.GetLastInsertId(tableName);
+
         CloseDB();
-        return null;
+        return id;
     }
 
     public int GetLastInsertId(string tableName)
@@ -249,6 +252,13 @@ public  class SqliteManager
         while(reader != null && reader.Read())
         {
             insertId = reader.GetInt32(reader.GetOrdinal("id"));
+            if(insertId > 0)
+            {
+                reader.Close();
+                CloseDB();
+                return insertId;
+            }
+            ViewUtils.Print("wtf last id is {0}",insertId);
         }
         reader.Close();
         CloseDB();
