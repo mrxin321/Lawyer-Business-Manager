@@ -25,8 +25,28 @@ public class BaseView : MonoBehaviour
         {
             var aspectRatioFitter = groupPanel.gameObject.GetComponentForce<AspectRatioFitter>();
             var fitInParentWithMinMax = groupPanel.gameObject.GetComponentForce<FitInParentWithMinMax>();
+
+            if(ViewType == ViewType.NormalView)
+            {
+                var tweenScaleTemp = groupPanel.gameObject.GetComponent<TweenScale>();
+                if(tweenScaleTemp != null)return;
+
+                var tweenScale = groupPanel.gameObject.GetComponentForce<TweenScale>();
+                tweenScale.from = new Vector3(0.5f,0.5f,1f);
+                tweenScale.to = new Vector3(1f,1f,1f);
+                tweenScale.duration = 0.2f;
+
+                Keyframe[] ks = new Keyframe[3];  
+                ks[0] = new Keyframe(0, 0);  
+                ks[0].outTangent = 1;  
+                ks[1] = new Keyframe(0.23f, 0.74f);  
+                ks[1].inTangent = 1f;  
+                ks[1].outTangent = 1f;  
+                ks[2] = new Keyframe(1, 1);  
+                ks[2].inTangent = 0;  
+                tweenScale.animationCurve = new AnimationCurve(ks);  
+            }
         }
-        
     }
 
     public void Close()

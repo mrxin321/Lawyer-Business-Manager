@@ -42,8 +42,7 @@ PlayerSettings:
   m_SplashScreenLogos:
   - logo: {fileID: 10404, guid: 0000000000000000e000000000000000, type: 0}
     duration: 2
-  m_VirtualRealitySplashScreen: {fileID: 2800000, guid: 3d8a890fb7cd14729af86c4423a8cc06,
-    type: 3}
+  m_VirtualRealitySplashScreen: {fileID: 0}
   m_ShowUnitySplashAds: 0
   m_AdsAndroidGameId: 
   m_AdsIosGameId: 
@@ -278,7 +277,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 560d1865245af45d08c9a6b74aca9e96, type: 3}
+      m_Icon: {fileID: 2800000, guid: 3ff3cf0cc65513349825b2482e3743d9, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -540,9 +539,9 @@ PlayerSettings:
   ps4attribEyeToEyeDistanceSettingVR: 0
   ps4IncludedModules: []
   monoEnv: 
-  splashScreenBackgroundSourceLandscape: {fileID: 21300000, guid: 2b4ae7f7872d34476bfaf101a2df4124,
+  splashScreenBackgroundSourceLandscape: {fileID: 21300000, guid: 9bd209c233ffc45c29c2a52f40fc2b31,
     type: 3}
-  splashScreenBackgroundSourcePortrait: {fileID: 21300000, guid: 23d3bc75ec84c49e08948885b3ed2295,
+  splashScreenBackgroundSourcePortrait: {fileID: 21300000, guid: 3ff3cf0cc65513349825b2482e3743d9,
     type: 3}
   spritePackerPolicy: 
   webGLMemorySize: 256

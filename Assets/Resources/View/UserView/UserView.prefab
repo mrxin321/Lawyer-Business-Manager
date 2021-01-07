@@ -1266,6 +1266,7 @@ GameObject:
   - component: {fileID: 9191160886100883478}
   - component: {fileID: 9191160886100883476}
   - component: {fileID: 9191160886100883477}
+  - component: {fileID: 7068304671477329908}
   m_Layer: 5
   m_Name: Group
   m_TagString: Untagged
@@ -1330,6 +1331,64 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &7068304671477329908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9191160886100883479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e7459110b9666449485c40f25362a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  method: 0
+  style: 0
+  animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2.888711
+      outSlope: 2.888711
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.1162083
+    - serializedVersion: 3
+      time: 0.23302382
+      value: 0.7455938
+      inSlope: 1.2379273
+      outSlope: 1.2379273
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.05351946
+      outSlope: -0.05351946
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.22243714
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ignoreTimeScale: 1
+  delay: 0
+  duration: 0.5
+  steeperCurves: 0
+  tweenGroup: 0
+  onFinished: []
+  eventReceiver: {fileID: 0}
+  callWhenFinished: 
+  from: {x: 0.5, y: 0.5, z: 1}
+  to: {x: 1, y: 1, z: 1}
+  updateTable: 0
 --- !u!1001 &8265607883432258239
 PrefabInstance:
   m_ObjectHideFlags: 0
