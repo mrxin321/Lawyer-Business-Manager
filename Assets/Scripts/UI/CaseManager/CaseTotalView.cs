@@ -36,6 +36,5 @@ public class CaseTotalView : BaseView
 			}
 
     	}
-    	dataReader.Close();
 	}
 }

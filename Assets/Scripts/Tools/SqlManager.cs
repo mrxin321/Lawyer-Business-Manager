@@ -6,6 +6,6 @@ public class SqlManager : MonoBehaviour
 {
 	void OnDestroy()
 	{
-		SqliteManager.Instance.CloseDB();
+		SqliteManager.Instance.CloseDbConnet();
 	}
 }

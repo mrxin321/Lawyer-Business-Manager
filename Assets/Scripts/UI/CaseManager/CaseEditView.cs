@@ -121,8 +121,8 @@ public class CaseEditView : BaseView
 
 			var calNames1 = new string[]{"id","name","contractid","mask","casetype","customer","plaintiff","defendant","other","institution","money","paytype","paydes"};
 	        
-			var reader = SqliteManager.Instance.UpateValue("case",calNames1,hashtable);
-			reader.Close();
+			SqliteManager.Instance.UpateValue("case",calNames1,hashtable);
+			
 			Close();
 			return;
 		}

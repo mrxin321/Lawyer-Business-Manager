@@ -75,12 +75,7 @@ public  class SqliteManager
     public SqliteDataReader ExecuteQuery(string tableName,string sqlString,bool isTransaction = false)
     {
         ViewUtils.Print(sqlString);
-        if (!isExistTable(tableName)) return null;
-       
-
-        //dbConnection.Close();
-        //}
-        //CloseDB();
+        // if (!isExistTable(tableName)) return null;
         return ExecuteReader(sqlString,isTransaction);
     }
     
@@ -135,6 +130,7 @@ public  class SqliteManager
         if(dataReader != null && dataReader.Read())
         {
             dataReader.Close();
+            CloseDB();
             return true;
         }
 
@@ -159,7 +155,7 @@ public  class SqliteManager
             File.Copy(Application.streamingAssetsPath + "/" + dbFile + ".db", _curDbpath);
             ViewUtils.Print("wtf 初始初始化数据库 拷贝本地数据到用户目录");
         }
-                    
+
         dbConnection = new SqliteConnection("Data Source=" + _curDbpath);
         OpenDB();
     }
@@ -175,9 +171,19 @@ public  class SqliteManager
     {
         if (dbConnection != null)
         {
+            ViewUtils.Print("wtf 关闭数据库连接=======================");
             dbConnection.Close();
-            dbConnection = null;
         }
+    }
+
+    public void CloseDbConnet()
+    {
+        CloseDB();
+        dbConnection.Dispose();
+        dbConnection = null;
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        ViewUtils.Print("wtf 关闭数据库连接");
     }
 
     private bool _isNeedCreateDB = false;
@@ -190,7 +196,7 @@ public  class SqliteManager
     {
         OpenDBFile(dbFile);
 
-        CreateTable(SqlConfig.MailTable, SqlConfig.MailTableBlock);
+        // CreateTable(SqlConfig.MailTable, SqlConfig.MailTableBlock);
 
     }
 
@@ -230,7 +236,8 @@ public  class SqliteManager
         string addSqlStr = string.Format("INSERT INTO '{0}' ({1}) VALUES({2})", tableName,colStr,paramStr);
         var reader = ExecuteQuery(tableName,addSqlStr);
         reader.Close();
-        return reader;
+        CloseDB();
+        return null;
     }
 
     public int GetLastInsertId(string tableName)
@@ -244,7 +251,7 @@ public  class SqliteManager
             insertId = reader.GetInt32(reader.GetOrdinal("id"));
         }
         reader.Close();
-
+        CloseDB();
         return insertId;
     }
 
@@ -280,7 +287,8 @@ public  class SqliteManager
         string addSqlStr = string.Format("Update '{0}' set {1} where id = {2}",tableName,sqlStr,paramTable[0]);
         var reader = ExecuteQuery(tableName,addSqlStr);
         reader.Close();
-        return reader;
+        CloseDB();
+        return null;
     }
     //所有选择
     public SqliteDataReader SelectAllParam(string tableName)
@@ -307,13 +315,15 @@ public  class SqliteManager
         string selectSqlStr = String.Format("Delete from '{0}' where {1} = {2}",tableName,calname,str);
         var reader = ExecuteQuery(tableName,selectSqlStr);
         reader.Close();
-        return reader;
+        CloseDB();
+        return null;
     }
 
     public SqliteDataReader DeleteRecord(string tableName,string deleteSql)
     {
         var reader = ExecuteQuery(tableName,deleteSql);
         reader.Close();
-        return reader;
+        CloseDB();
+        return null;
     }
 }

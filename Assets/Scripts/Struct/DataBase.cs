@@ -47,6 +47,7 @@ public class DataBase
     	GetDataBase(reader,args);
 		var data = GetData();
 		reader.Close();
+		SqliteManager.Instance.CloseDB();
 		return data as T;
 	}
 
@@ -66,6 +67,7 @@ public class DataBase
     		dataList.Add(data);
     	}
     	reader.Close();
+    	SqliteManager.Instance.CloseDB();
     	return dataList;
     }
 

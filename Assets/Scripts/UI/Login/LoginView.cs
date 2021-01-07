@@ -35,6 +35,7 @@ public class LoginView : BaseView
     		PlayerDataManager.Instance.SetUserData(userId,username,permission);
 	    	
 	    	dataReader.Close();
+            SqliteManager.Instance.CloseDB();
 	    	Close();
 	    	
             UIManager.Instance.OpenWindow("ToDoListView");
