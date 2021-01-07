@@ -203,7 +203,6 @@ public  class SqliteManager
 
     public int InsertValue(string tableName,string[] colName,Hashtable paramTable)
     {
-        
         if (colName.Length != paramTable.Count)
         {
             Debug.LogError("=================colNames And paramTable 长度不一致");
@@ -245,6 +244,8 @@ public  class SqliteManager
 
     public int GetLastInsertId(string tableName)
     {
+        if(tableName == "case")tableName = string.Format("'{0}'",tableName);
+        
         var insertId = -1;
 
         var sql = "select last_insert_rowid() as id from " + tableName ;
