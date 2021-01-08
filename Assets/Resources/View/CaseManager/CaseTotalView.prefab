@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ViewType: 0
+  RefreshView: 1
   ItemRoot: {fileID: 8657677943672084429}
 --- !u!1 &1117380819788895939
 GameObject:
@@ -341,7 +342,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6848\u5B50\u7BA1\u7406"
+  m_Text: "\u6848\u4EF6\u7BA1\u7406"
 --- !u!1 &5452245875944363949
 GameObject:
   m_ObjectHideFlags: 0

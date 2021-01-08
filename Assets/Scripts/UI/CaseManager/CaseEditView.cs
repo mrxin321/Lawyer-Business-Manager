@@ -52,7 +52,7 @@ public class CaseEditView : BaseView
 			Money.text = CaseData.Money;
 			Paydes.text = CaseData.Paydes;
 
-		    BtnName.text = "修改案子";
+		    BtnName.text = "修改案件";
 		}
 
 		var dataReader_ = SqliteManager.Instance.SelectAllParam("casetype");
