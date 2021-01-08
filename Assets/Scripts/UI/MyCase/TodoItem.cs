@@ -18,7 +18,7 @@ public class TodoItem : MonoBehaviour
         if(taskData != null)
         { 
             TaskContent.text = taskData.Content;
-            CaseName.text = string.Format("{0}的{1}",taskData.CaseName,taskData.StageName);
+            CaseName.text = string.Format("{0}案件{1}阶段",taskData.CaseName,taskData.StageName);
             Dropdown.value = taskData.State;
     	}
     }
