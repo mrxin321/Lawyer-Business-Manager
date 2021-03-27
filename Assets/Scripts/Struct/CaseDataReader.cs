@@ -4,11 +4,12 @@ using Mono.Data.Sqlite;
 
 public class CaseDataReader
 {
-    public List<CaseData> GetDataList()
+    public static List<CaseData> GetMyDataList()
     {
         var userId = PlayerDataManager.Instance.GetUserId();
-        var dataReader = SqliteManager.Instance.SelectParam("case","master",userId.ToString());
-        var dataList = DataBase.GetDataList<CaseData>(dataReader,"id","des","content","name","master","contractid","customerid");
+        var sql = "select * from 'case' join usercase on 'case'.id  = usercase.caseid where userid = {0}";
+        var dataReader = SqliteManager.Instance.SelectParam("case",string.Format(sql,userId));
+        var dataList = DataBase.GetDataList<CaseData>(dataReader,"id","mask","name","contractid");
         return dataList;
     }
 }

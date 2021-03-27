@@ -10,11 +10,7 @@ public class MyCaseListView : BaseView
 	{
 		Utility.DestroyAllChildren(ItemRoot);
 
-		var myUserId = PlayerDataManager.Instance.GetUserId();
-		
-		var dataReader = SqliteManager.Instance.SelectParam("case","master",myUserId.ToString());
-
-		var dataList = DataBase.GetDataList<CaseData>(dataReader,"id","name","mask","content","master","contractid");
+		var dataList = CaseDataReader.GetMyDataList();
 		foreach(var taskData in dataList)
     	{
 			var copyItem = AssetManager.CreatePrefab("MyCaseItem",ItemRoot);

@@ -94,6 +94,9 @@ public class DataBase
     		case "PayTypeData":
     			data = new PayTypeData();
     			break;
+    		case "UserCaseData":
+    			data = new UserCaseData();
+    			break;
     	}
     	return data as T;;
     }
