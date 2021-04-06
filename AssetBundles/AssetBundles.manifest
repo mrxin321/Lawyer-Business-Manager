@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 347265660
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: abc_btn
+      Dependencies: {}

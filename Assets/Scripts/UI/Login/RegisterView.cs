@@ -27,6 +27,16 @@ public class RegisterView : BaseView
 
         var dataReader = SqliteManager.Instance.SelectParam("user","account",string.Format("'{0}'",Account.text));
         var list = DataBase.GetDataList<UserData>(dataReader,"id","account");
+
+        Debug.LogFormat("list:----------------{0}", list);
+        for(int i = 0; i < list.Count; i++){
+            Debug.LogFormat("i==================: {0}", i);
+            Debug.LogFormat("list.Name: {0}", list[i].Name);
+            Debug.LogFormat("list.Id: {0}", list[i].Id);
+            Debug.LogFormat("list.NickName: {0}", list[i].NickName);
+            Debug.LogFormat("list.Password: {0}", list[i].Password);
+        }
+        
         if(list.Count > 0)
         {
             ViewUtils.MessageTips("账号重复了!!!");
