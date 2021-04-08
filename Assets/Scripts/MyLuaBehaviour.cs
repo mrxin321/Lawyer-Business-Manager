@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Assets.CustomAssets.Scripts.Foundation.Common;
 using UnityEngine;
 using XLua;
 
@@ -54,12 +53,13 @@ namespace CustomAssets.Scripts.XLuaScripts
         [HideInInspector] public List<string> monoItemNames = new List<string>();
 
         #endregion
-    
+        
+        public static LuaFunction RequireLuaFile;
         void Awake()
         {
-            if(!string.IsNullOrEmpty(LuaBind))
+            if(!string.IsNullOrEmpty(LuaBind)  && RequireLuaFile != null)
             {
-                LuaBridge.requireLuaFile.Call(LuaBind, this);
+                RequireLuaFile.Call(LuaBind, this);
             }
         }        
 
@@ -420,7 +420,7 @@ namespace CustomAssets.Scripts.XLuaScripts
             }
             catch (System.Exception e)
             {
-                EDebug.LogWarning(FormatException(e), gameObject);
+                Debug.LogWarning(FormatException(e), gameObject);
             }
 
             return null;
