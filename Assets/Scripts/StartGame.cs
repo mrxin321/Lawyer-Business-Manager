@@ -13,40 +13,44 @@ public class StartGame : MonoBehaviour
         SqliteManager.Instance.OpenDBFile(SqlConfig.myDB);
 
 		/** injectFix **/
-        var patch = Resources.Load<TextAsset>("Assembly-CSharp.patch");
-        if (patch != null)
-        {
-            UnityEngine.Debug.Log("loading Assembly-CSharp.patch ...");
-            var sw = Stopwatch.StartNew();
-            PatchManager.Load(new MemoryStream(patch.bytes));
-            UnityEngine.Debug.Log("patch Assembly-CSharp.patch, using " + sw.ElapsedMilliseconds + " ms");
-        }
-        //try to load patch for Assembly-CSharp-firstpass.dll
-        patch = Resources.Load<TextAsset>("Assembly-CSharp-firstpass.patch");
-        if (patch != null)
-        {
-            UnityEngine.Debug.Log("loading Assembly-CSharp-firstpass ...");
-            var sw = Stopwatch.StartNew();
-            PatchManager.Load(new MemoryStream(patch.bytes));
-            UnityEngine.Debug.Log("patch Assembly-CSharp-firstpass, using " + sw.ElapsedMilliseconds + " ms");
-        }
+        // var patch = Resources.Load<TextAsset>("Assembly-CSharp.patch");
+        // if (patch != null)
+        // {
+        //     UnityEngine.Debug.Log("loading Assembly-CSharp.patch ...");
+        //     var sw = Stopwatch.StartNew();
+        //     PatchManager.Load(new MemoryStream(patch.bytes));
+        //     UnityEngine.Debug.Log("patch Assembly-CSharp.patch, using " + sw.ElapsedMilliseconds + " ms");
+        // }
+        // //try to load patch for Assembly-CSharp-firstpass.dll
+        // patch = Resources.Load<TextAsset>("Assembly-CSharp-firstpass.patch");
+        // if (patch != null)
+        // {
+        //     UnityEngine.Debug.Log("loading Assembly-CSharp-firstpass ...");
+        //     var sw = Stopwatch.StartNew();
+        //     PatchManager.Load(new MemoryStream(patch.bytes));
+        //     UnityEngine.Debug.Log("patch Assembly-CSharp-firstpass, using " + sw.ElapsedMilliseconds + " ms");
+        // }
         /** injectFix **/
 
         Utility.DoWait(()=>{
         	Destroy(gameObject);
 
         	//如果本地没有账号 注册
-        	var userId = PlayerPrefs.GetString("UserId","");
+        	// var userId = PlayerPrefs.GetString("UserId","");
 
-			UnityEngine.Debug.LogFormat("userId：--------------{0}", userId);
+			// UnityEngine.Debug.LogFormat("userId：--------------{0}", userId);
 
-        	if(userId == "")
-        	{	
-        		UIManager.Instance.OpenWindow("RegisterView");
-        		return;
-        	}
+        	// if(userId == "")
+        	// {	
+        	// 	UIManager.Instance.OpenWindow("RegisterView");
+        	// 	return;
+        	// }
 
-        	UIManager.Instance.OpenWindow("LoginView");
+        	// UIManager.Instance.OpenWindow("LoginView");
+
+
+            // Close();
+            UIManager.Instance.OpenWindow("TestLuaView");
         },4,this);
     }
 }

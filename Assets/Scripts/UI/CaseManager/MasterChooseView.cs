@@ -49,7 +49,7 @@ public class MasterChooseView : BaseView
 		}
 	}
 	
-	public void Close()
+	public new void Close()
 	{
 		base.Close();
 		var dic = new List<UserData>();

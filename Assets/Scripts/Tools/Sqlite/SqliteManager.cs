@@ -179,7 +179,9 @@ public  class SqliteManager
     public void CloseDbConnet()
     {
         CloseDB();
-        dbConnection.Dispose();
+        if(dbConnection != null){
+            dbConnection.Dispose();
+        }
         dbConnection = null;
         GC.Collect();
         GC.WaitForPendingFinalizers();
