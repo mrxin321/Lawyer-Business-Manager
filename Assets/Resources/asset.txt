@@ -28,6 +28,7 @@ tempstagelistview:prefab:View/TemplateManager/TempStageListView.prefab:assets___
 tempstageselectitem:prefab:View/TemplateManager/TempStageSelectItem.prefab:assets___resources___view.resource
 tempstageselectlistview:prefab:View/TemplateManager/TempStageSelectListView.prefab:assets___resources___view.resource
 temptasklistview:prefab:View/TemplateManager/TempTaskListView.prefab:assets___resources___view.resource
+testluaview:prefab:View/TestLuaView.prefab:assets___resources___view.resource
 bg:prefab:View/UIComponent/bg.prefab:assets___resources___view.resource
 button:prefab:View/UIComponent/Button.prefab:assets___resources___view.resource
 closebtn:prefab:View/UIComponent/CloseBtn.prefab:assets___resources___view.resource

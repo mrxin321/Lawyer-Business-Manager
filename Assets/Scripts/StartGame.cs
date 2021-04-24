@@ -36,21 +36,19 @@ public class StartGame : MonoBehaviour
         	Destroy(gameObject);
 
         	//如果本地没有账号 注册
-        	// var userId = PlayerPrefs.GetString("UserId","");
+        	var userId = PlayerPrefs.GetString("UserId","");
 
 			// UnityEngine.Debug.LogFormat("userId：--------------{0}", userId);
 
-        	// if(userId == "")
-        	// {	
-        	// 	UIManager.Instance.OpenWindow("RegisterView");
-        	// 	return;
-        	// }
+        	if(userId == "")
+        	{	
+        		UIManager.Instance.OpenWindow("RegisterView");
+        		return;
+        	}
 
-        	// UIManager.Instance.OpenWindow("LoginView");
-
-
-            // Close();
-            UIManager.Instance.OpenWindow("TestLuaView");
+        	UIManager.Instance.OpenWindow("LoginView");
+            
+            // UIManager.Instance.OpenWindow("TestLuaView");
         },4,this);
     }
 }

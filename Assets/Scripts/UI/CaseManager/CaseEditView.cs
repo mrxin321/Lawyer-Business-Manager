@@ -45,6 +45,34 @@ public class CaseEditView : BaseView
 		CaseStageAddItem.RemoveStageId -= OnRemoveStageId;
 	}
 
+	public string GetCaseNum(int caseIndex)
+	{
+		var TopNum = 10000;
+		TopNum += caseIndex;
+
+		var str = TopNum.ToString();
+
+		return str.Substring(1,str.Length-1);
+	}	
+
+	public string GetDayString()
+	{
+		return DateTime.Now.Year.ToString();
+	}
+
+	public string GetCaseTypeString()
+	{
+		return CaseTypeList[Dropdown.value].Name[0] + "";
+	}
+
+	public string GetCaseTypeIndex()
+	{
+		var caseType = CaseTypeList[Dropdown.value].Id;
+		var index = PlayerPrefs.GetInt("CaseIndex"+caseType.ToString(),1);
+
+		return GetCaseNum(index);
+	}
+
 	public override void Refresh()
 	{
 		DataTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -54,6 +82,7 @@ public class CaseEditView : BaseView
 		var _params = GetParams();
 		var caseType = 1;
 		var payType = 1;
+
 		if(_params.Length > 0)
 		{
 			CaseData = (CaseData)_params[0];
@@ -100,12 +129,24 @@ public class CaseEditView : BaseView
 	        if(caseType == dataList[i].Id)Dropdown.value = i;
 	    }
 
+	    SetCaseNum(_params.Length <= 0);
+
 	    var paytypeReader = SqliteManager.Instance.SelectAllParam("paytype");
 
 		var payTypeList = DataBase.GetDataList<PayTypeData>(paytypeReader,"id","name");
 
 	    ViewUtils.SetPayTypeDropdown(Paytype,payTypeList,payType - 1);
 
+	}
+
+	public void SetCaseNum(bool setName)
+	{
+		if(!setName)return;
+		//新创建案件 需要自动填充名字
+		var dayStr = GetDayString();
+		var castTypeStr = GetCaseTypeString();
+		var indexStr = GetCaseTypeIndex();
+		ContractId.text = string.Format("({0})粤法丞汇俊莞{1}字第{2}号",dayStr,castTypeStr,indexStr);
 	}
 
 	public void OnSaveClick()
@@ -177,6 +218,10 @@ public class CaseEditView : BaseView
 
 		//添加负责人
 		AddCaseMaster(caseId);
+
+		var index = PlayerPrefs.GetInt("CaseIndex"+CaseTypeList[Dropdown.value].Id.ToString(),1);
+		index++;
+		PlayerPrefs.SetInt("CaseIndex"+CaseTypeList[Dropdown.value].Id.ToString(),index);
 
 		Close();	
 	}
