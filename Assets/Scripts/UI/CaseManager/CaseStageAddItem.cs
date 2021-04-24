@@ -20,7 +20,7 @@ public class CaseStageAddItem : MonoBehaviour
         TempStageSelectItem.CaseTempStageAddSuccess -= CaseTempStageAddSuccess;
     }
 
-    private void CaseTempStageAddSuccess(int id,bool _select,string name)
+    private void CaseTempStageAddSuccess(int id,bool _select,string name,string des)
     {
         if(!_select && StageId == id)
         {

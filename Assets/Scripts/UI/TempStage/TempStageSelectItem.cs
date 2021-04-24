@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class TempStageSelectItem : MonoBehaviour
 {
-	public static Action<int,bool,string> CaseTempStageAddSuccess;
+	public static Action<int,bool,string,string> CaseTempStageAddSuccess;
 
     [SerializeField] Text StageName;
     [SerializeField] SelectItem SelectItem;
@@ -22,6 +22,6 @@ public class TempStageSelectItem : MonoBehaviour
 
     public void OnSelectItem(bool _select)
     {
-        Utility.SafePostEvent(CaseTempStageAddSuccess,StageData.Id,_select,StageData.Name);
+        Utility.SafePostEvent(CaseTempStageAddSuccess,StageData.Id,_select,StageData.Name,StageData.Des);
     }
 }

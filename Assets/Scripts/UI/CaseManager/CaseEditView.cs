@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class CaseEditView : BaseView	
 {
@@ -29,7 +30,7 @@ public class CaseEditView : BaseView
 	private List<CaseTypeData> CaseTypeList;
 	private string DataTime;
 	private List<UserData> MasterList = new List<UserData>();
-	private List<int> TempStageList = new List<int>();
+	private Dictionary<int,StageData> StageList = new Dictionary<int,StageData>();
 
 	private void OnEnable()
 	{
@@ -113,6 +114,8 @@ public class CaseEditView : BaseView
 		 		MasterList.Add(data);
 		 	}
 		 	OnMasterChooseAction(MasterList);
+
+	    	RefreshStageList(CaseData);
 		}
 
 		var dataReader_ = SqliteManager.Instance.SelectAllParam("casetype");
@@ -137,6 +140,28 @@ public class CaseEditView : BaseView
 
 	    ViewUtils.SetPayTypeDropdown(Paytype,payTypeList,payType - 1);
 
+
+	}
+
+	public void RefreshStageList(CaseData caseData)
+	{
+		var dataReader = SqliteManager.Instance.SelectParam("stage","caseid",caseData.Id.ToString());
+		var dataList = DataBase.GetDataList<StageData>(dataReader,"id","name","des");
+
+		var sqlStr = "SELECT * FROM 'stage' where caseid = 0 and casetype = {0}";
+		var dataReader2 = SqliteManager.Instance.SelectParam("stage",string.Format(sqlStr,CaseData.CaseType));
+		var templateStageList = DataBase.GetDataList<StageData>(dataReader2,"id","name","des","casetype");
+
+		foreach(var stageData in dataList)
+    	{
+    		foreach(var templateItem in templateStageList)
+    		{
+    			if(templateItem.Name == stageData.Name)
+    			{
+    				CaseTempStageAddSuccess(templateItem.Id,true,templateItem.Name,templateItem.Des);
+    			}
+    		}
+    	}
 	}
 
 	public void SetCaseNum(bool setName)
@@ -165,6 +190,7 @@ public class CaseEditView : BaseView
 
 		Hashtable hashtable = new Hashtable();
 
+
 		if(CaseData != null)
 		{
 			//删除案件管理者
@@ -192,7 +218,10 @@ public class CaseEditView : BaseView
 			var calNames1 = new string[]{"id","name","contractid","mask","casetype","customer","plaintiff","defendant","other","institution","money","paytype","paydes"};
 	        
 			SqliteManager.Instance.UpateValue("case",calNames1,hashtable);
-			
+				
+			DeleteCaseStage(CaseData.Id);
+			AddCaseStage(StageList,CaseData.Id);
+
 			Close();
 			return;
 		}
@@ -216,6 +245,8 @@ public class CaseEditView : BaseView
 
 		var caseId = SqliteManager.Instance.InsertValue("case",calNames,hashtable);
 
+		AddCaseStage(StageList,caseId);
+
 		//添加负责人
 		AddCaseMaster(caseId);
 
@@ -224,6 +255,45 @@ public class CaseEditView : BaseView
 		PlayerPrefs.SetInt("CaseIndex"+CaseTypeList[Dropdown.value].Id.ToString(),index);
 
 		Close();	
+	}
+
+	private void AddCaseStage(Dictionary<int,StageData> stageList,int caseId)
+	{
+		foreach(var item in stageList.Values)
+		{
+			Hashtable hashtable = new Hashtable();
+			hashtable.Add(0,item.Name);
+	        hashtable.Add(1,caseId);
+	        hashtable.Add(2,item.Des);
+
+			var calNames = new string[]{"name","caseid","des"};
+
+			var stageId = SqliteManager.Instance.InsertValue("stage",calNames,hashtable);
+
+			var dataReader = SqliteManager.Instance.SelectParam("task","stageid",item.Id.ToString());
+
+			var dataList = DataBase.GetDataList<TaskData>(dataReader,"id","content","des");
+			foreach(var taskData in dataList)
+	    	{
+				//添加任务
+				var thashtable = new Hashtable();
+				thashtable.Add(0,stageId);
+				thashtable.Add(1,taskData.Content);
+				thashtable.Add(2,taskData.Des);
+				var tcalNames = new string[]{"stageid","content","des"};
+				SqliteManager.Instance.InsertValue("task",tcalNames,thashtable);
+	    	}
+
+		}
+	}
+
+	private void DeleteCaseStage(int caseid)
+	{
+		Hashtable dhashtable = new Hashtable();
+		dhashtable.Add(0,caseid);
+
+		SqliteManager.Instance.DeleteRecord("stage","caseid",dhashtable);
+		SqliteManager.Instance.DeleteRecord("task","stageid",dhashtable);
 	}
 
 	private void AddCaseMaster(int id)
@@ -272,26 +342,29 @@ public class CaseEditView : BaseView
 
 	public void OpenStageListView()
 	{
-		UIManager.Instance.OpenWindow("TempStageSelectListView",CaseTypeList[Dropdown.value].Id,TempStageList);
+		var list = StageList.Keys.ToList();
+		UIManager.Instance.OpenWindow("TempStageSelectListView",CaseTypeList[Dropdown.value].Id,list);
 	}
 
 	private void OnRemoveStageId(int stageId)
 	{
-		foreach(var item in TempStageList)
+		if(StageList.ContainsKey(stageId))
 		{
-			if(item == stageId)
-			{
-				TempStageList.Remove(stageId);
-				return;
-			}
+			StageList.Remove(stageId);
 		}
 	}
 
-	public void CaseTempStageAddSuccess(int stageId,bool _select,string stageName)
+	public void CaseTempStageAddSuccess(int stageId,bool _select,string stageName,string des)
 	{
 		if(_select)
 		{
-			TempStageList.Add(stageId);
+			var data = new StageData();
+			data.Id = stageId;
+			data.Name = stageName;
+			data.Des = des;
+
+			StageList.Add(stageId,data);
+
 	 		var copyItem = AssetManager.CreatePrefab("CaseStageAddItem",TempStageRoot);
 
 	        var item = copyItem.GetComponent<CaseStageAddItem>();
