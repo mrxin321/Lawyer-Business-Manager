@@ -26,7 +26,7 @@ public class BaseView : MonoBehaviour
             var aspectRatioFitter = groupPanel.gameObject.GetComponentForce<AspectRatioFitter>();
             var fitInParentWithMinMax = groupPanel.gameObject.GetComponentForce<FitInParentWithMinMax>();
 
-            if(ViewType == ViewType.NormalView)
+            if(ViewType == ViewType.NormalView )
             {
                 var tweenScaleTemp = groupPanel.gameObject.GetComponent<TweenScale>();
                 if(tweenScaleTemp != null)return;

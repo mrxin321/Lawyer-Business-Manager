@@ -97,7 +97,10 @@ public class DataBase
     		case "UserCaseData":
     			data = new UserCaseData();
     			break;
+    		case "CaseTypeNumData":
+    			data = new CaseTypeNumData();
+    			break;
     	}
-    	return data as T;;
+    	return data as T;
     }
 }

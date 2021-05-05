@@ -48,10 +48,11 @@ public class CaseEditView : BaseView
 
 	public string GetCaseNum(int caseIndex)
 	{
-		var TopNum = 10000;
-		TopNum += caseIndex;
+		var TopNum = 1000;
+		if(caseIndex < TopNum)
+			caseIndex += TopNum;
 
-		var str = TopNum.ToString();
+		var str = caseIndex.ToString();
 
 		return str.Substring(1,str.Length-1);
 	}	
@@ -69,7 +70,32 @@ public class CaseEditView : BaseView
 	public string GetCaseTypeIndex()
 	{
 		var caseType = CaseTypeList[Dropdown.value].Id;
-		var index = PlayerPrefs.GetInt("CaseIndex"+caseType.ToString(),1);
+
+		var dataReader = SqliteManager.Instance.SelectParam("casetypenum","id",DateTime.Now.Year.ToString());
+		var dataList = DataBase.GetDataList<CaseTypeNumData>(dataReader,"num"+caseType.ToString());
+
+		//没有当前年份 添加
+		if(dataList.Count <= 0)
+		{
+			Hashtable dhashtable = new Hashtable();
+			dhashtable.Add(0,DateTime.Now.Year);
+			dhashtable.Add(1,0);
+			dhashtable.Add(2,0);
+			dhashtable.Add(3,0);
+			dhashtable.Add(4,0);
+			dhashtable.Add(5,0);
+			dhashtable.Add(6,0);
+			var calNames = new string[]{"id","num1","num2","num3","num4","num5","num6"};
+	        
+			SqliteManager.Instance.InsertValue("casetypenum",calNames,dhashtable);
+		}
+
+		var index = 1;
+		if(dataList.Count > 0)
+		{
+			index = dataList[0].GetNum(caseType);
+			index++;
+		}
 
 		return GetCaseNum(index);
 	}
@@ -83,6 +109,26 @@ public class CaseEditView : BaseView
 		var _params = GetParams();
 		var caseType = 1;
 		var payType = 1;
+
+		var dataReader_ = SqliteManager.Instance.SelectAllParam("casetype");
+
+		var dataList = DataBase.GetDataList<CaseTypeData>(dataReader_,"id","name");
+		Dropdown.options.Clear();
+		CaseTypeList = dataList;
+	   	for (int i = 0; i < dataList.Count; i++)
+	    {
+	       	var temoData = new Dropdown.OptionData();
+	       	temoData.text = dataList[i].Name;
+	        Dropdown.options.Add(temoData);
+
+	        if(caseType == dataList[i].Id)Dropdown.value = i;
+	    }
+
+	    var paytypeReader = SqliteManager.Instance.SelectAllParam("paytype");
+
+		var payTypeList = DataBase.GetDataList<PayTypeData>(paytypeReader,"id","name");
+
+	    ViewUtils.SetPayTypeDropdown(Paytype,payTypeList,payType - 1);
 
 		if(_params.Length > 0)
 		{
@@ -116,30 +162,11 @@ public class CaseEditView : BaseView
 		 	OnMasterChooseAction(MasterList);
 
 	    	RefreshStageList(CaseData);
+		}else
+		{
+			//新建案件
+			SetCaseNum();
 		}
-
-		var dataReader_ = SqliteManager.Instance.SelectAllParam("casetype");
-
-		var dataList = DataBase.GetDataList<CaseTypeData>(dataReader_,"id","name");
-		Dropdown.options.Clear();
-		CaseTypeList = dataList;
-	   	for (int i = 0; i < dataList.Count; i++)
-	    {
-	       	var temoData = new Dropdown.OptionData();
-	       	temoData.text = dataList[i].Name;
-	        Dropdown.options.Add(temoData);
-
-	        if(caseType == dataList[i].Id)Dropdown.value = i;
-	    }
-
-	    SetCaseNum(_params.Length <= 0);
-
-	    var paytypeReader = SqliteManager.Instance.SelectAllParam("paytype");
-
-		var payTypeList = DataBase.GetDataList<PayTypeData>(paytypeReader,"id","name");
-
-	    ViewUtils.SetPayTypeDropdown(Paytype,payTypeList,payType - 1);
-
 
 	}
 
@@ -162,11 +189,15 @@ public class CaseEditView : BaseView
     			}
     		}
     	}
+	}	
+
+	public void CaseTypeChangeEvent()
+	{
+		SetCaseNum();
 	}
 
-	public void SetCaseNum(bool setName)
+	public void SetCaseNum()
 	{
-		if(!setName)return;
 		//新创建案件 需要自动填充名字
 		var dayStr = GetDayString();
 		var castTypeStr = GetCaseTypeString();
@@ -244,18 +275,45 @@ public class CaseEditView : BaseView
         
 		var calNames = new string[]{"name","contractid","mask","master","casetype","customer","plaintiff","defendant","other","institution","money","paytype","paydes","createtime"};
 
-		var caseId = SqliteManager.Instance.InsertValue("case",calNames,hashtable);
+		SqliteManager.Instance.InsertValue("case",calNames,hashtable,(caseId)=>{
+			AddCaseTemplateStage(StageList,caseId);
+			//添加负责人
+			AddCaseMaster(caseId);
+			//保存index
+			var index = GetCaseNameNum(ContractId.text);
 
-		AddCaseTemplateStage(StageList,caseId);
+			Hashtable dhashtable2 = new Hashtable();
+			dhashtable2.Add(0,DateTime.Now.Year.ToString());
+			dhashtable2.Add(1,index);
+			var calNames2 = new string[]{"id","num"+CaseTypeList[Dropdown.value].Id.ToString()};
+	        
+			SqliteManager.Instance.UpateValue("casetypenum",calNames2,dhashtable2);
 
-		//添加负责人
-		AddCaseMaster(caseId);
+			Close();	
+		});
+	}
 
-		var index = PlayerPrefs.GetInt("CaseIndex"+CaseTypeList[Dropdown.value].Id.ToString(),1);
-		index++;
-		PlayerPrefs.SetInt("CaseIndex"+CaseTypeList[Dropdown.value].Id.ToString(),index);
+	private int GetCaseNameNum(string name)
+	{
+		for(int i = 0;i<name.Length;i++)
+		{
+			if(name[i] == '第')
+			{
+				for(int j = 1;j<=6;j++)
+				{
+					if(name[i+j] == '号')
+					{
+						var indexStr = name.Substring(i+1,j-1);
+						var index = 0;
+        				int.TryParse(indexStr, out index);
 
-		Close();	
+						return index;
+					}
+				}	
+				break;
+			}
+		}
+		return -1;
 	}
 
 	private void AddCaseTemplateStage(Dictionary<int,StageData> stageList,int caseId)
