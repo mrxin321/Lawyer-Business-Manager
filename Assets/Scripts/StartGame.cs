@@ -31,24 +31,19 @@ public class StartGame : MonoBehaviour
         //     UnityEngine.Debug.Log("patch Assembly-CSharp-firstpass, using " + sw.ElapsedMilliseconds + " ms");
         // }
         /** injectFix **/
+    	//如果本地没有账号 注册
+    	var userId = PlayerPrefs.GetString("UserId","");
 
-        Utility.DoWait(()=>{
-        	Destroy(gameObject);
+		// UnityEngine.Debug.LogFormat("userId：--------------{0}", userId);
 
-        	//如果本地没有账号 注册
-        	var userId = PlayerPrefs.GetString("UserId","");
+    	if(userId == "")
+    	{	
+    		UIManager.Instance.OpenWindow("RegisterView");
+    		return;
+    	}
 
-			// UnityEngine.Debug.LogFormat("userId：--------------{0}", userId);
-
-        	if(userId == "")
-        	{	
-        		UIManager.Instance.OpenWindow("RegisterView");
-        		return;
-        	}
-
-        	UIManager.Instance.OpenWindow("LoginView");
+    	UIManager.Instance.OpenWindow("LoginView");
             
             // UIManager.Instance.OpenWindow("TestLuaView");
-        },4,this);
     }
 }

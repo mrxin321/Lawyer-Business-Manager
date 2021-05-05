@@ -158,10 +158,6 @@ public partial class Utility : Singleton<Utility>
     /// <returns></returns>
     public static long GetServerTime()
     {
-        if (!ServerTimeReady)
-        {
-            throw new InvalidOperationException("Server Time is not ready!");
-        }
         return (long)(GetTimeStamp(System.DateTime.Now) + _deltaTimeBetweenLocalAndServer);
     }
 

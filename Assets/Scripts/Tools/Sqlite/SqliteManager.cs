@@ -152,7 +152,7 @@ public  class SqliteManager
             // FileStream fileStream = fileInfo.Create();
             // fileStream.Close();
             //拷贝文件
-            File.Copy(Application.streamingAssetsPath + "/" + dbFile + ".db", _curDbpath);
+            // File.Copy(Application.streamingAssetsPath + "/" + dbFile + ".db", _curDbpath);
             ViewUtils.Print("wtf 初始初始化数据库 拷贝本地数据到用户目录");
         }
 
@@ -183,9 +183,19 @@ public  class SqliteManager
             dbConnection.Dispose();
         }
         dbConnection = null;
+        SqliteConnection.ClearAllPools();
         GC.Collect();
         GC.WaitForPendingFinalizers();
         ViewUtils.Print("wtf 关闭数据库连接");
+
+        SqliteConnection.ClearAllPools();
+        SqliteConnection.ClearAllPools();
+        SqliteConnection.ClearAllPools();
+
+        Utility.DoWait(()=>{
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        },0.1f,Utility.Instance);
     }
 
     private bool _isNeedCreateDB = false;
@@ -203,7 +213,7 @@ public  class SqliteManager
     }
 
 
-    public int InsertValue(string tableName,string[] colName,Hashtable paramTable)
+    public int InsertValue(string tableName,string[] colName,Hashtable paramTable,Action<int> callback = null,bool showMask = false)
     {
         if (colName.Length != paramTable.Count)
         {
@@ -235,13 +245,27 @@ public  class SqliteManager
             }
         }
         string addSqlStr = string.Format("INSERT INTO '{0}' ({1}) VALUES({2})", tableName,colStr,paramStr);
-        var reader = ExecuteQuery(tableName,addSqlStr);
-        reader.Close();
 
-        var id = SqliteManager.Instance.GetLastInsertId(tableName);
+        //主键id名
+        var idKeyName = "id";
 
-        CloseDB();
-        return id;
+        if(showMask)UIManager.Instance.OpenWindow("MessageMaskView",true);
+        SqlManager.Instance.SendInsertSql(addSqlStr,(insertId)=>{
+            if(insertId > 0)
+            {
+                if(showMask)UIManager.Instance.CloseWindow("MessageMaskView");;
+                string addSqlStr1 = string.Format("INSERT INTO '{0}' ({1},{2}) VALUES({3},{4})", tableName,idKeyName,colStr,insertId,paramStr);
+                var reader = ExecuteQuery(tableName,addSqlStr1);
+                reader.Close();
+
+                CloseDB();
+
+                Utility.SafePostEvent(callback,insertId);
+            }
+            
+        });
+
+        return 0;
     }
 
     public int GetLastInsertId(string tableName)
@@ -268,7 +292,7 @@ public  class SqliteManager
         return insertId;
     }
 
-    public SqliteDataReader UpateValue(string tableName,string[] colName,Hashtable paramTable)
+    public SqliteDataReader UpateValue(string tableName,string[] colName,Hashtable paramTable,Action callback=null)
     {
         
         if (colName.Length != paramTable.Count)
@@ -298,9 +322,14 @@ public  class SqliteManager
         }
 
         string addSqlStr = string.Format("Update '{0}' set {1} where id = {2}",tableName,sqlStr,paramTable[0]);
-        var reader = ExecuteQuery(tableName,addSqlStr);
-        reader.Close();
-        CloseDB();
+
+        SqlManager.Instance.SendExecuteSql(addSqlStr,()=>{
+            var reader = ExecuteQuery(tableName,addSqlStr);
+            reader.Close();
+            CloseDB();
+            Utility.SafePostEvent(callback);
+        });
+        
         return null;
     }
     //所有选择
@@ -322,21 +351,30 @@ public  class SqliteManager
         return ExecuteQuery(tableName,selectSqlStrs);
     }
 
-    public SqliteDataReader DeleteRecord(string tableName,string calname,Hashtable paramTable)
+    public SqliteDataReader DeleteRecord(string tableName,string calname,Hashtable paramTable,Action callback = null)
     {
         var str = paramTable[0] is string?"'"+paramTable[0]+"'":paramTable[0];
         string selectSqlStr = String.Format("Delete from '{0}' where {1} = {2}",tableName,calname,str);
-        var reader = ExecuteQuery(tableName,selectSqlStr);
-        reader.Close();
-        CloseDB();
+
+        SqlManager.Instance.SendExecuteSql(selectSqlStr,()=>{
+            var reader = ExecuteQuery(tableName,selectSqlStr);
+            reader.Close();
+            CloseDB();
+            Utility.SafePostEvent(callback);
+        });
+        
         return null;
     }
 
-    public SqliteDataReader DeleteRecord(string tableName,string deleteSql)
+    public SqliteDataReader DeleteRecord(string tableName,string deleteSql,Action callback = null)
     {
-        var reader = ExecuteQuery(tableName,deleteSql);
-        reader.Close();
-        CloseDB();
+        SqlManager.Instance.SendExecuteSql(deleteSql,()=>{
+             var reader = ExecuteQuery(tableName,deleteSql);
+            reader.Close();
+            CloseDB();
+            Utility.SafePostEvent(callback);
+        });
+
         return null;
     }
 }

@@ -76,12 +76,19 @@ public class StageEditView : BaseView
         hashtable.Add(2,Des.text);
 	    hashtable.Add(3,CaseTypeList[Dropdown.value].Id);
 		var calNames = new string[]{"name","caseid","des","casetype"};
+		
+		SqliteManager.Instance.InsertValue("stage",calNames,hashtable,(insertId)=>{
 
-		SqliteManager.Instance.InsertValue("stage",calNames,hashtable);
-		Utility.SafePostEvent(StageListlView.UpdateView);
-		Close();
+			if(insertId > 0)
+			{
+				Utility.SafePostEvent(StageListlView.UpdateView);
+				Close();
 
-		PlayerPrefs.SetInt("InserStageCaseType",CaseTypeList[Dropdown.value].Id);
+				PlayerPrefs.SetInt("InserStageCaseType",CaseTypeList[Dropdown.value].Id);
+			}
+			
+		});
+		
 	} 
 
 }

@@ -66,9 +66,14 @@ public class TaskEditView : BaseView
 
 		var calNames = new string[]{"stageid","content","des","todocount"};
 
-		SqliteManager.Instance.InsertValue("task",calNames,hashtable);
-		Utility.SafePostEvent(TaskListView.UpdateView);
-		Close();
+		SqliteManager.Instance.InsertValue("task",calNames,hashtable,(insertId)=>{
+			if(insertId > 0)
+			{
+				Utility.SafePostEvent(TaskListView.UpdateView);
+				Close();
+			}
+		},true);
+		
 	} 
 
 	private int GetToDoCount()

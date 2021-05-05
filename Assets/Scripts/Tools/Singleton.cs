@@ -68,6 +68,6 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         InstanceField = null;
     }
-
+    protected virtual void Reset(){}
     #endregion
 }

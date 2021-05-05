@@ -219,10 +219,11 @@ public class CaseEditView : BaseView
 	        
 			SqliteManager.Instance.UpateValue("case",calNames1,hashtable);
 				
-			DeleteCaseStage(CaseData.Id);
-			AddCaseStage(StageList,CaseData.Id);
+			DeleteCaseStage(CaseData.Id,()=>{
+				AddCaseTemplateStage(StageList,CaseData.Id);
+				Close();
+			});
 
-			Close();
 			return;
 		}
 
@@ -245,7 +246,7 @@ public class CaseEditView : BaseView
 
 		var caseId = SqliteManager.Instance.InsertValue("case",calNames,hashtable);
 
-		AddCaseStage(StageList,caseId);
+		AddCaseTemplateStage(StageList,caseId);
 
 		//添加负责人
 		AddCaseMaster(caseId);
@@ -257,7 +258,7 @@ public class CaseEditView : BaseView
 		Close();	
 	}
 
-	private void AddCaseStage(Dictionary<int,StageData> stageList,int caseId)
+	private void AddCaseTemplateStage(Dictionary<int,StageData> stageList,int caseId)
 	{
 		foreach(var item in stageList.Values)
 		{
@@ -268,32 +269,35 @@ public class CaseEditView : BaseView
 
 			var calNames = new string[]{"name","caseid","des"};
 
-			var stageId = SqliteManager.Instance.InsertValue("stage",calNames,hashtable);
+			SqliteManager.Instance.InsertValue("stage",calNames,hashtable,(insertId)=>{
+				var dataReader = SqliteManager.Instance.SelectParam("task","stageid",item.Id.ToString());
 
-			var dataReader = SqliteManager.Instance.SelectParam("task","stageid",item.Id.ToString());
-
-			var dataList = DataBase.GetDataList<TaskData>(dataReader,"id","content","des");
-			foreach(var taskData in dataList)
-	    	{
-				//添加任务
-				var thashtable = new Hashtable();
-				thashtable.Add(0,stageId);
-				thashtable.Add(1,taskData.Content);
-				thashtable.Add(2,taskData.Des);
-				var tcalNames = new string[]{"stageid","content","des"};
-				SqliteManager.Instance.InsertValue("task",tcalNames,thashtable);
-	    	}
+				var dataList = DataBase.GetDataList<TaskData>(dataReader,"id","content","des");
+				foreach(var taskData in dataList)
+		    	{
+					//添加任务
+					var thashtable = new Hashtable();
+					thashtable.Add(0,insertId);
+					thashtable.Add(1,taskData.Content);
+					thashtable.Add(2,taskData.Des);
+					var tcalNames = new string[]{"stageid","content","des"};
+					SqliteManager.Instance.InsertValue("task",tcalNames,thashtable);
+		    	}
+			});
 
 		}
 	}
 
-	private void DeleteCaseStage(int caseid)
+	private void DeleteCaseStage(int caseid,Action callback)
 	{
 		Hashtable dhashtable = new Hashtable();
 		dhashtable.Add(0,caseid);
 
-		SqliteManager.Instance.DeleteRecord("stage","caseid",dhashtable);
-		SqliteManager.Instance.DeleteRecord("task","stageid",dhashtable);
+		SqliteManager.Instance.DeleteRecord("stage","caseid",dhashtable,()=>{
+			SqliteManager.Instance.DeleteRecord("task","stageid",dhashtable,()=>{
+				Utility.SafePostEvent(callback);
+			});
+		});
 	}
 
 	private void AddCaseMaster(int id)

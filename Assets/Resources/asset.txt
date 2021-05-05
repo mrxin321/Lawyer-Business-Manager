@@ -10,6 +10,7 @@ stagelistlview:prefab:View/CaseManager/StageListlView.prefab:assets___resources_
 taskeditview:prefab:View/CaseManager/TaskEditView.prefab:assets___resources___view.resource
 taskitem:prefab:View/CaseManager/TaskItem.prefab:assets___resources___view.resource
 tasklistview:prefab:View/CaseManager/TaskListView.prefab:assets___resources___view.resource
+messagemaskview:prefab:View/Common/MessageMaskView.prefab:assets___resources___view.resource
 messagetipsconfirmview:prefab:View/Common/MessageTipsConfirmView.prefab:assets___resources___view.resource
 messagetipsview:prefab:View/Common/MessageTipsView.prefab:assets___resources___view.resource
 loginview:prefab:View/Login/LoginView.prefab:assets___resources___view.resource

@@ -38,10 +38,24 @@ public class UIManager : Singleton<UIManager>
 			if(baseView.ViewType == ViewType.NormalView || baseView.ViewType == ViewType.SingleView)
 				UIList.Add(baseView);
 
+			baseView.gameObject.name = name;
+			Debug.LogFormat("wtf 打开界面 ================ {0} {1}",name,baseView.gameObject.name);
 			return baseView;
 		}
 		Debug.LogFormat("wtf 没有此界面{0}",name);
 		return null;
+	}
+
+	public void CloseWindow(string viewName)
+	{
+		foreach(var item in UIList)
+		{
+			if(item.gameObject.name == viewName)
+			{
+				CloseWindow(item);
+				break;
+			}
+		}
 	}
 
 	public void CloseWindow(BaseView baseview)
