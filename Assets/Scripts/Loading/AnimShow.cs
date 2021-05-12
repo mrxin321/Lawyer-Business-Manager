@@ -20,6 +20,8 @@ public class AnimShow : LoadingItemBase
 
     public override void StartProgress()
     {
+        AssetNameLoader.Instance.LoadAssetText();
+        
         Utility.DoWait(()=>{
             LoadingFinish = true;
         },4,this);

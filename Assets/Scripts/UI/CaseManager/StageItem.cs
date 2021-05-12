@@ -27,10 +27,10 @@ public class StageItem : MonoBehaviour
     {
     	Hashtable hashtable = new Hashtable();
 		hashtable.Add(0,StageData.Id);
-        SqliteManager.Instance.DeleteRecord("stage","id",hashtable);
+        SqliteManager.Instance.DeleteRecord("stage","id",hashtable,()=>{
+           Utility.SafePostEvent(StageListlView.UpdateView);
+        });
 		SqliteManager.Instance.DeleteRecord("task","stageid",hashtable);
-
-		Utility.SafePostEvent(StageListlView.UpdateView);
     }
 
     public void TaskList()

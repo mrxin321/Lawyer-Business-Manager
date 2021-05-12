@@ -32,10 +32,9 @@ public class CaseItem : MonoBehaviour
         var deleteSql = "delete from task where stageid in(select id from stage where stage.caseid = {0})";
         SqliteManager.Instance.DeleteRecord("task",string.Format(deleteSql,CaseData.Id.ToString()));
         
-        SqliteManager.Instance.DeleteRecord("case","id",hashtable);
+        SqliteManager.Instance.DeleteRecord("case","id",hashtable,()=>{
+            Utility.SafePostEvent(CaseTotalView.UpdateCaseView);
+        });
 		SqliteManager.Instance.DeleteRecord("stage","caseid",hashtable);
-        
-
-		Utility.SafePostEvent(CaseTotalView.UpdateCaseView);
     }
 }

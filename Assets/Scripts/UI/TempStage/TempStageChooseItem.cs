@@ -27,29 +27,26 @@ public class TempStageChooseItem : MonoBehaviour
         hashtable.Add(2,StageData.Des);
 		var calNames = new string[]{"name","caseid","des"};
 
-		var stageId = SqliteManager.Instance.InsertValue("stage",calNames,hashtable);
+		SqliteManager.Instance.InsertValue("stage",calNames,hashtable,(stageId)=>{
+			if(stageId > 0)
+			{
+				var dataReader = SqliteManager.Instance.SelectParam("task","stageid",StageData.Id.ToString());
 
-		//获取最新id
-		// var stageId = SqliteManager.Instance.GetLastInsertId("stage");
+				var dataList = DataBase.GetDataList<TaskData>(dataReader,"id","content","des");
+				foreach(var taskData in dataList)
+		    	{
+					//添加任务
+					var thashtable = new Hashtable();
+					thashtable.Add(0,stageId);
+					thashtable.Add(1,taskData.Content);
+					thashtable.Add(2,taskData.Des);
+					var tcalNames = new string[]{"stageid","content","des"};
+					SqliteManager.Instance.InsertValue("task",tcalNames,thashtable);
+		    	}
+			}
 
-		if(stageId > 0)
-		{
-			var dataReader = SqliteManager.Instance.SelectParam("task","stageid",StageData.Id.ToString());
-
-			var dataList = DataBase.GetDataList<TaskData>(dataReader,"id","content","des");
-			foreach(var taskData in dataList)
-	    	{
-				//添加任务
-				var thashtable = new Hashtable();
-				thashtable.Add(0,stageId);
-				thashtable.Add(1,taskData.Content);
-				thashtable.Add(2,taskData.Des);
-				var tcalNames = new string[]{"stageid","content","des"};
-				SqliteManager.Instance.InsertValue("task",tcalNames,thashtable);
-	    	}
-		}
-
-		ViewUtils.MessageTips("添加模板成功!!!");
-		Utility.SafePostEvent(TempStageAddSuccess);
+			ViewUtils.MessageTips("添加模板成功!!!");
+			Utility.SafePostEvent(TempStageAddSuccess);
+		});
     }
 }

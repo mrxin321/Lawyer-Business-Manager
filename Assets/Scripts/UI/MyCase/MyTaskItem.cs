@@ -87,8 +87,9 @@ public class MyTaskItem : MonoBehaviour
         hashtable.Add(1,Dropdown.value);
         var calNames1 = new string[]{"id","state"};
         
-        SqliteManager.Instance.UpateValue("task",calNames1,hashtable);
+        SqliteManager.Instance.UpateValue("task",calNames1,hashtable,()=>{
+            Utility.SafePostEvent(MyStageItem.StageDataUpdate,TaskData.StageId);
+        });
 
-        Utility.SafePostEvent(MyStageItem.StageDataUpdate,TaskData.StageId);
     }
 }

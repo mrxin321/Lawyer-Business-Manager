@@ -209,13 +209,13 @@ public class CaseEditView : BaseView
 	{
 		if(ContractId.text == "")
 		{
-			ViewUtils.MessageTips("项目编号不能空哦");
+			ViewUtils.MessageTips("案件编号不能空哦");
 			return;
 		}
 
 		if(CaseName.text == "")
 		{
-			ViewUtils.MessageTips("项目名字不能空哦");
+			ViewUtils.MessageTips("案件名字不能空哦");
 			return;
 		}
 

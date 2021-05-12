@@ -53,10 +53,12 @@ public class TaskEditView : BaseView
 			hashtable.Add(3,GetToDoCount());
 			var calNames1 = new string[]{"id","content","des","todocount"};
 	        
-			SqliteManager.Instance.UpateValue("task",calNames1,hashtable);
-			Utility.SafePostEvent(TaskItem.TaskUpdate,TaskData.Id);
-			Close();
-			return;
+			SqliteManager.Instance.UpateValue("task",calNames1,hashtable,()=>{
+				Utility.SafePostEvent(TaskItem.TaskUpdate,TaskData.Id);
+				Close();
+				return;
+			});
+			
 		}
 
 		hashtable.Add(0,StageId);

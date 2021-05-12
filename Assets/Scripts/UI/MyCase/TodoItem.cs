@@ -31,11 +31,13 @@ public class TodoItem : MonoBehaviour
         hashtable.Add(1,Dropdown.value);
         var calNames1 = new string[]{"id","state"};
         
-        SqliteManager.Instance.UpateValue("task",calNames1,hashtable);
+        SqliteManager.Instance.UpateValue("task",calNames1,hashtable,()=>{
+            if(Dropdown.value == 2)
+            {
+                Utility.SafePostEvent(ToDoListView.UpdateView);
+            }
+        });
 
-        if(Dropdown.value == 2)
-        {
-            Utility.SafePostEvent(ToDoListView.UpdateView);
-        }
+        
     }
 }

@@ -65,10 +65,12 @@ public class StageEditView : BaseView
 	        hashtable.Add(4,CaseTypeList[Dropdown.value].Id);
 			var calNames1 = new string[]{"id","name","caseid","des","casetype"};
 	        
-			SqliteManager.Instance.UpateValue("stage",calNames1,hashtable);
-			Utility.SafePostEvent(StageListlView.UpdateView);
-			Close();
-			return;
+			SqliteManager.Instance.UpateValue("stage",calNames1,hashtable,()=>{
+				Utility.SafePostEvent(StageListlView.UpdateView);
+				Close();
+				return;
+			});
+			
 		}
 
 		hashtable.Add(0,StageName.text);

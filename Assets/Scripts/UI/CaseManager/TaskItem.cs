@@ -45,8 +45,8 @@ public class TaskItem : MonoBehaviour
     {
     	Hashtable hashtable = new Hashtable();
 		hashtable.Add(0,TaskData.Id);
-		SqliteManager.Instance.DeleteRecord("task","id",hashtable);
-
-		Destroy(gameObject);
+		SqliteManager.Instance.DeleteRecord("task","id",hashtable,()=>{
+			Destroy(gameObject);
+		});
     }
 }

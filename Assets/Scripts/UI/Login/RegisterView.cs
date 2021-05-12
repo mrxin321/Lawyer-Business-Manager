@@ -45,4 +45,10 @@ public class RegisterView : BaseView
         });
     	
     }
+
+    public void Back()
+    {
+        Close();
+        UIManager.Instance.OpenWindow("LoginView");
+    }
 }

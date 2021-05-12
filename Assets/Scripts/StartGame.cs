@@ -32,18 +32,39 @@ public class StartGame : MonoBehaviour
         // }
         /** injectFix **/
     	//如果本地没有账号 注册
-    	var userId = PlayerPrefs.GetString("UserId","");
+    	// var userId = PlayerPrefs.GetString("UserId","");
 
 		// UnityEngine.Debug.LogFormat("userId：--------------{0}", userId);
 
-    	if(userId == "")
-    	{	
-    		UIManager.Instance.OpenWindow("RegisterView");
-    		return;
-    	}
+    	// if(userId == "")
+    	// {	
+    	// 	UIManager.Instance.OpenWindow("RegisterView");
+    	// 	return;
+    	// }
 
-    	UIManager.Instance.OpenWindow("LoginView");
+        var account = PlayerPrefs.GetString("UserId","");
+        var password     = PlayerPrefs.GetString("PassWord","");
+
+        var dataReader = SqliteManager.Instance.SelectParam("user",string.Format("select * from user where account = '{0}' and password = '{1}'",account,password));
+        while(dataReader != null && dataReader.Read())
+        {
+            var userId = dataReader.GetInt32(dataReader.GetOrdinal("id"));
+            var permission = dataReader.GetInt32(dataReader.GetOrdinal("permission"));
+            var username = dataReader.GetString(dataReader.GetOrdinal("name"));
+
+            PlayerPrefs.SetString("UserId",account);
+            PlayerPrefs.SetString("PassWord",password);
+
+            PlayerDataManager.Instance.SetUserData(userId,username,permission);
             
-            // UIManager.Instance.OpenWindow("TestLuaView");
+            dataReader.Close();
+            SqliteManager.Instance.CloseDB();
+            
+            UIManager.Instance.OpenWindow("ToDoListView");
+            return;
+        }
+
+        UIManager.Instance.OpenWindow("LoginView");
+
     }
 }
