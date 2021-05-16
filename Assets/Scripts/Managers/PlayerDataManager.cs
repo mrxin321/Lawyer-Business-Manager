@@ -34,6 +34,11 @@ public  class PlayerDataManager
         return UserId;
     }
 
+    public int GetPermissin()
+    {
+        return Permission;
+    }
+
     public string GetUserName()
     {
         return UserName;

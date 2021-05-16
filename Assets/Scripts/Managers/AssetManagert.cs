@@ -26,6 +26,7 @@ public class AssetManager : MonoBehaviour
                 if(parent != null)
                 {
                     prefab.transform.SetParent(parent.transform);
+                    prefab.transform.localScale = Vector3.one;
                     prefab.name = prefabName;
                 }
                 return prefab;
