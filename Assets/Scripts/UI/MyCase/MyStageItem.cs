@@ -9,18 +9,26 @@ public class MyStageItem : MonoBehaviour
     public static Action<int> StageDataUpdate;
 
     [SerializeField] Text StageName;
-	[SerializeField] Text StageProgress;
+    [SerializeField] Text StageProgress;
+	[SerializeField] Transform DeleteBtn;
 
 	private StageData StageData;
 
-    private void Start()
+    private void MyCaseEditEvent()
+    {
+        DeleteBtn.gameObject.SetActive(!DeleteBtn.gameObject.activeSelf);
+        StageProgress.gameObject.SetActive(!DeleteBtn.gameObject.activeSelf);
+    }
+    private void Awake()
     {
         StageDataUpdate += OnStageDataUpdate;
+        MyCaseListView.MyCaseEditEvent +=    MyCaseEditEvent;
     }
 
     private void OnDestroy()
     {
         StageDataUpdate -= OnStageDataUpdate;
+        MyCaseListView.MyCaseEditEvent -=    MyCaseEditEvent;
     }
 
     private void OnStageDataUpdate(int stageId)
@@ -29,6 +37,11 @@ public class MyStageItem : MonoBehaviour
         {
             SetData(StageData);
         }
+    }
+
+    public void OnDeleteClick()
+    {
+
     }
 
     public void SetData(StageData stageData)

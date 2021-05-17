@@ -8,8 +8,27 @@ public class MyCaseItem : MonoBehaviour
 	[SerializeField] Text CaseName;
     [SerializeField] Transform StageRoot;
     [SerializeField] Transform OpenTag;
+    [SerializeField] Transform DeleteBtn;
 
 	private CaseData CaseData;
+
+    void OnEnable()
+    {
+        MyCaseListView.MyCaseEditEvent +=    MyCaseEditEvent;
+    }
+
+    void OnDisable()
+    {
+        MyCaseListView.MyCaseEditEvent -=    MyCaseEditEvent;
+    }
+
+    private void MyCaseEditEvent()
+    {
+        DeleteBtn.gameObject.SetActive(!DeleteBtn.gameObject.activeSelf);
+    }
+
+    public void DeleteBtnClick()
+    {}
 
     public void SetData(CaseData caseData)
     {

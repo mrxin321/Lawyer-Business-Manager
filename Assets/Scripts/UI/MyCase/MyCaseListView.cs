@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MyCaseListView : BaseView
 {
     [SerializeField] Transform ItemRoot;
+
+    public static Action MyCaseEditEvent;
 
     public override void Refresh()
 	{
@@ -22,5 +25,10 @@ public class MyCaseListView : BaseView
 			}
 
     	}
+	}
+
+	public void OnEditorClick()
+	{
+		Utility.SafePostEvent(MyCaseEditEvent);
 	}
 }

@@ -8,7 +8,6 @@ using System.Linq;
 public class CaseEditView : BaseView	
 {
 	public static Action<List<UserData>> MasterChooseAction;
-
 	[SerializeField] InputField CaseName;
 	[SerializeField] InputField ContractId;
 	[SerializeField] InputField Mask;
@@ -165,9 +164,18 @@ public class CaseEditView : BaseView
 		}else
 		{
 			//新建案件
+			NewCaseView();
 			SetCaseNum();
 		}
 
+	}
+
+	public void NewCaseView()
+	{
+		var dic = new List<UserData>();
+		var data = PlayerDataManager.Instance.GetUserData();
+		dic.Add(data);
+		Utility.SafePostEvent(CaseEditView.MasterChooseAction,dic);
 	}
 
 	public void RefreshStageList(CaseData caseData)
@@ -278,7 +286,9 @@ public class CaseEditView : BaseView
 		SqliteManager.Instance.InsertValue("case",calNames,hashtable,(caseId)=>{
 			AddCaseTemplateStage(StageList,caseId);
 			//添加负责人
-			AddCaseMaster(caseId);
+			AddCaseMaster(caseId,()=>{
+				Close();	
+			});
 			//保存index
 			var index = GetCaseNameNum(ContractId.text);
 
@@ -288,8 +298,6 @@ public class CaseEditView : BaseView
 			var calNames2 = new string[]{"id","num"+CaseTypeList[Dropdown.value].Id.ToString()};
 	        
 			SqliteManager.Instance.UpateValue("casetypenum",calNames2,dhashtable2);
-
-			Close();	
 		});
 	}
 
@@ -358,8 +366,9 @@ public class CaseEditView : BaseView
 		});
 	}
 
-	private void AddCaseMaster(int id)
+	private void AddCaseMaster(int id,Action callback = null)
 	{
+		var count = 0;
 		//添加负责人
 		foreach(var item in MasterList)
 		{
@@ -368,7 +377,10 @@ public class CaseEditView : BaseView
 			hashtable1.Add(1,item.Id);
 			hashtable1.Add(2,item.NickName);
 			var calNames1 = new string[]{"caseid","userid","name"};
-			SqliteManager.Instance.InsertValue("usercase",calNames1,hashtable1);
+			SqliteManager.Instance.InsertValue("usercase",calNames1,hashtable1,(iid)=>{
+				count ++;
+				if(count == MasterList.Count)Utility.SafePostEvent(callback);
+			});
 		}
 	}
 

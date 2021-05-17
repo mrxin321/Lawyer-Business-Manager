@@ -22,6 +22,14 @@ public  class PlayerDataManager
     private string UserName;
     private int Permission;
 
+    public UserData GetUserData()
+    {
+        var data = new UserData();
+        data.Id = UserId;
+        data.NickName = UserName;
+        return data;
+    }
+
     public void SetUserData(int userId,string userName,int permission)
     {
         UserId = userId;

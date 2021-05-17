@@ -38,7 +38,8 @@ public class LoginView : BaseView
     	{
     		var userId = dataReader.GetInt32(dataReader.GetOrdinal("id"));
     		var permission = dataReader.GetInt32(dataReader.GetOrdinal("permission"));
-    		var username = dataReader.GetString(dataReader.GetOrdinal("name"));
+            var username = dataReader.GetString(dataReader.GetOrdinal("name"));
+    		var nickName = dataReader.GetString(dataReader.GetOrdinal("name"));
 
             PlayerPrefs.SetString("UserId",account);
             PlayerPrefs.SetString("PassWord",password);

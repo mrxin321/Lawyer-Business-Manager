@@ -10,7 +10,7 @@ public class MasterChooseItem :MonoBehaviour
     [SerializeField] SelectItem SelectItem;
 
     private int MasterId;
-    private Action<int,bool> ChooseAction;
+    public static Action<int,bool> ChooseAction;
 	public void SetData(int masterId,string name,bool choose,Action<int,bool> chooseAction)
 	{
 		ChooseAction = chooseAction; 

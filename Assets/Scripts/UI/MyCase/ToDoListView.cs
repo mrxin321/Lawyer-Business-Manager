@@ -23,10 +23,12 @@ public class ToDoListView : BaseView
 
     public override void Refresh()
     {
+
         Utility.DestroyAllChildren(ItemRoot);
 
         //获取当前没有完结的案子的未完成任务
         var todoList = TaskReader.GetToDoList(PlayerDataManager.Instance.GetUserId());
+        Debug.LogFormat("wtf Refresh ================={0}",todoList.Count);
 
         foreach(var taskData in todoList)
         {
