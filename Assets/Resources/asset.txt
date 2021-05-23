@@ -1,3 +1,4 @@
+casecheckview:prefab:View/CaseManager/CaseCheckView.prefab:assets___resources___view.resource
 caseeditview:prefab:View/CaseManager/CaseEditView.prefab:assets___resources___view.resource
 caseitem:prefab:View/CaseManager/CaseItem.prefab:assets___resources___view.resource
 casestageadditem:prefab:View/CaseManager/CaseStageAddItem.prefab:assets___resources___view.resource
@@ -10,6 +11,7 @@ stagelistlview:prefab:View/CaseManager/StageListlView.prefab:assets___resources_
 taskeditview:prefab:View/CaseManager/TaskEditView.prefab:assets___resources___view.resource
 taskitem:prefab:View/CaseManager/TaskItem.prefab:assets___resources___view.resource
 tasklistview:prefab:View/CaseManager/TaskListView.prefab:assets___resources___view.resource
+bottom:prefab:View/Common/Bottom.prefab:assets___resources___view.resource
 messagemaskview:prefab:View/Common/MessageMaskView.prefab:assets___resources___view.resource
 messagetipsconfirmview:prefab:View/Common/MessageTipsConfirmView.prefab:assets___resources___view.resource
 messagetipsview:prefab:View/Common/MessageTipsView.prefab:assets___resources___view.resource

@@ -412,5 +412,17 @@ PrefabInstance:
       propertyPath: LoadingRate
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 1128028338, guid: ae3988f28bccd421899e867f013fd128, type: 3}
+      propertyPath: m_Color.r
+      value: 0.8313726
+      objectReference: {fileID: 0}
+    - target: {fileID: 1128028338, guid: ae3988f28bccd421899e867f013fd128, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8470589
+      objectReference: {fileID: 0}
+    - target: {fileID: 1128028338, guid: ae3988f28bccd421899e867f013fd128, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8588236
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae3988f28bccd421899e867f013fd128, type: 3}
