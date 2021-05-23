@@ -46,7 +46,9 @@ public class UserView : BaseView
 	        SceneManager.LoadScene("Loading", LoadSceneMode.Additive);
 		};
     	UIManager.Instance.OpenWindow("MessageTipsConfirmView","是否要重新刷新数据?",action);
-
-		
+	}
+	public void OnTotalCaseClick()
+	{
+		UIManager.Instance.OpenWindow("MyCaseListView",MyCaseShowType.TotalCase);
 	}
 }

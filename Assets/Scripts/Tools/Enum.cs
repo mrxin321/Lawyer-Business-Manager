@@ -10,3 +10,9 @@ public enum PermissionType
 	None 						= 0,
 	Manager  					= 1, 			//管理员
 }
+
+public enum MyCaseShowType
+{
+	MyCase  					=0,
+	TotalCase 					=1,
+}

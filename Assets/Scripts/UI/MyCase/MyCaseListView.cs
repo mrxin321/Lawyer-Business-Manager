@@ -1,20 +1,50 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public class MyCaseListView : BaseView
 {
     [SerializeField] Transform ItemRoot;
+    [SerializeField] Transform NewCaseBtn;
+    [SerializeField] Transform BackBtn;
+    [SerializeField] Text TileText;
 
     public static Action MyCaseEditEvent;
+    public static Action RefreshMyCaseEvent;
+    private MyCaseShowType MyCaseShowType;
+
+    private void Awake()
+    {
+        RefreshMyCaseEvent += OnRefreshMyCaseEvent;
+    }
+
+    private void OnDestroy()
+    {
+        RefreshMyCaseEvent -= OnRefreshMyCaseEvent;
+    }
 
     public override void Refresh()
 	{
 		Utility.DestroyAllChildren(ItemRoot);
 
-		var dataList = CaseDataReader.GetMyDataList();
-		foreach(var taskData in dataList)
+		var _param = GetParams();
+		var caseList = new List<CaseData>();
+
+		if(_param.Length > 0)MyCaseShowType = MyCaseShowType.TotalCase;
+
+		NewCaseBtn.gameObject.SetActive(MyCaseShowType != MyCaseShowType.TotalCase);
+		BackBtn.gameObject.SetActive(MyCaseShowType == MyCaseShowType.TotalCase);
+
+		if(MyCaseShowType == MyCaseShowType.TotalCase)
+		{
+			caseList = CaseDataReader.GetAllDataList();
+			TileText.text = "全部案件";
+		}
+		else caseList = CaseDataReader.GetMyDataList();
+		
+		foreach(var taskData in caseList)
     	{
 			var copyItem = AssetManager.CreatePrefab("MyCaseItem",ItemRoot);
 
@@ -25,6 +55,11 @@ public class MyCaseListView : BaseView
 			}
 
     	}
+	}
+
+	private void OnRefreshMyCaseEvent()
+	{
+		Refresh();
 	}
 
 	public void OnEditorClick()

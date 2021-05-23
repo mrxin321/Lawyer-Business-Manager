@@ -12,4 +12,11 @@ public class CaseDataReader
         var dataList = DataBase.GetDataList<CaseData>(dataReader,"id","mask","name","contractid");
         return dataList;
     }
+
+    public static List<CaseData> GetAllDataList()
+    {
+        var dataReader = SqliteManager.Instance.SelectAllParam("case");
+        var dataList = DataBase.GetDataList<CaseData>(dataReader,"id","mask","name","contractid");
+        return dataList;
+    }
 }

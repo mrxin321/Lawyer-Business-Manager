@@ -64,4 +64,9 @@ public class MyCaseItem : MonoBehaviour
     {
         UIManager.Instance.OpenWindow("MyStageListlView",CaseData.Id);
     }
+
+    public void CaseCheckClick()
+    {
+        UIManager.Instance.OpenWindow("CaseCheckView",CaseData);
+    }
 }
