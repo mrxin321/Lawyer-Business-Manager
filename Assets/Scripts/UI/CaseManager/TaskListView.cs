@@ -49,6 +49,21 @@ public class TaskListView : BaseView
     	}
 	}
 
+	public void StageDelete()
+	{
+		Action action = delegate{
+			Hashtable hashtable = new Hashtable();
+			hashtable.Add(0,StageData.Id);
+	        SqliteManager.Instance.DeleteRecord("stage","id",hashtable,()=>{
+	           Utility.SafePostEvent(StageListlView.UpdateView);
+	        });
+
+	        Close();
+			SqliteManager.Instance.DeleteRecord("task","stageid",hashtable);
+		};
+    	UIManager.Instance.OpenWindow("MessageTipsConfirmView","是否要删除阶段？删除后将无法恢复，关联任务也将全部删除",action);
+	}
+
 	public void TaskAdd()
 	{
         UIManager.Instance.OpenWindow("TaskEditView",StageData.Id);

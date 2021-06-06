@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class ToDoListView : BaseView
 {
+    [SerializeField] BottomFuncManager BottomFuncManager;
+    
     public static Action UpdateView;
 
     private void OnEnable()
@@ -23,6 +25,7 @@ public class ToDoListView : BaseView
 
     public override void Refresh()
     {
+        BottomFuncManager.SetIndex(0);
 
         Utility.DestroyAllChildren(ItemRoot);
 

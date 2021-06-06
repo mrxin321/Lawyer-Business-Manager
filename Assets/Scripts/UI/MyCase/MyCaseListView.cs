@@ -10,6 +10,7 @@ public class MyCaseListView : BaseView
     [SerializeField] Transform NewCaseBtn;
     [SerializeField] Transform BackBtn;
     [SerializeField] Text TileText;
+	[SerializeField] BottomFuncManager BottomFuncManager;
 
     public static Action MyCaseEditEvent;
     public static Action RefreshMyCaseEvent;
@@ -27,6 +28,7 @@ public class MyCaseListView : BaseView
 
     public override void Refresh()
 	{
+		BottomFuncManager.SetIndex(1);
 		Utility.DestroyAllChildren(ItemRoot);
 
 		var _param = GetParams();

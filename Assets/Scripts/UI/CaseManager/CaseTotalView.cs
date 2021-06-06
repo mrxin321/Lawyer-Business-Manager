@@ -6,6 +6,7 @@ using UnityEngine;
 public class CaseTotalView : BaseView
 {
 	[SerializeField] Transform ItemRoot;
+    [SerializeField] BottomFuncManager BottomFuncManager;
 
 	public static Action UpdateCaseView;
 
@@ -21,6 +22,8 @@ public class CaseTotalView : BaseView
 
 	public override void Refresh()
 	{
+        BottomFuncManager.SetIndex(2);
+
 		Utility.DestroyAllChildren(ItemRoot);
 		
 		var dataReader = SqliteManager.Instance.SelectAllParam("case");

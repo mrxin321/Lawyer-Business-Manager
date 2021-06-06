@@ -24,6 +24,7 @@ public class CaseEditView : BaseView
 	[SerializeField] Dropdown Paytype;
 	[SerializeField] InputField Paydes;
 	[SerializeField] Transform TempStageRoot;
+	[SerializeField] Transform AddStageBtn;
 
 	private CaseData CaseData;
 	private List<CaseTypeData> CaseTypeList;
@@ -236,9 +237,9 @@ public class CaseEditView : BaseView
 			Hashtable dhashtable = new Hashtable();
 			dhashtable.Add(0,CaseData.Id);
 
-			SqliteManager.Instance.DeleteRecord("usercase","caseid",dhashtable);
-
-			AddCaseMaster(CaseData.Id);
+			SqliteManager.Instance.DeleteRecord("usercase","caseid",dhashtable,()=>{
+				AddCaseMaster(CaseData.Id);
+			});
 
 			hashtable.Add(0,CaseData.Id);
 			hashtable.Add(1,CaseName.text);
@@ -368,6 +369,7 @@ public class CaseEditView : BaseView
 
 	private void AddCaseMaster(int id,Action callback = null)
 	{
+		Debug.LogFormat("wtf AddCaseMaster {0}",MasterList.Count);
 		var count = 0;
 		//添加负责人
 		foreach(var item in MasterList)
@@ -444,9 +446,10 @@ public class CaseEditView : BaseView
 	        var item = copyItem.GetComponent<CaseStageAddItem>();
 	        if(item != null)
 	        {
-	        	item.transform.SetAsFirstSibling();
+	        	item.transform.SetAsLastSibling();
 	            item.SetData(stageId,stageName);
 	        }
+	        AddStageBtn.SetAsLastSibling();
 	    }else
 	    {
 	    	OnRemoveStageId(stageId);

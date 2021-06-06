@@ -48,6 +48,26 @@ public class StageListlView : BaseView
     	}
 	}
 
+	public void CaseDelete()
+	{
+		Action action = delegate{
+			Hashtable hashtable = new Hashtable();
+			hashtable.Add(0,CaseData.Id);
+
+	        var deleteSql = "delete from task where stageid in(select id from stage where stage.caseid = {0})";
+	        SqliteManager.Instance.DeleteRecord("task",string.Format(deleteSql,CaseData.Id.ToString()));
+	        
+	        SqliteManager.Instance.DeleteRecord("case","id",hashtable,()=>{
+	            Utility.SafePostEvent(MyCaseListView.RefreshMyCaseEvent);
+				Close();
+	        });
+			SqliteManager.Instance.DeleteRecord("stage","caseid",hashtable);
+
+			
+		};
+    	UIManager.Instance.OpenWindow("MessageTipsConfirmView","是否要删除案件？删除后将无法恢复，关联阶段跟任务也将全部删除",action);
+	}
+
 	public void StageAdd()
 	{
         UIManager.Instance.OpenWindow("StageEditView",CaseData.Id);

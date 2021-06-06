@@ -37,8 +37,16 @@ public class TempStageChooseListView : BaseView
 			if(item != null)
 			{
 				stage.CaseId = CaseData.Id;
-				item.SetData(stage);
+				item.SetData(stage,-1);
 			}
+		}
+
+		//添加其他
+		var otherItem = AssetManager.CreatePrefab("TempStageChooseItem",ItemRoot);
+		var otherCell = otherItem.GetComponent<TempStageChooseItem>();
+		if(otherCell != null)
+		{
+			otherCell.SetData(null,CaseData.Id);
 		}
 	}
 }

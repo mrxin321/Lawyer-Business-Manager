@@ -9,9 +9,12 @@ using UnityEngine.SceneManagement;
 public class UserView : BaseView
 {
 	[SerializeField] Text WelcomeText;
+	[SerializeField] BottomFuncManager BottomFuncManager;
 
     public override void Refresh()
 	{
+		BottomFuncManager.SetIndex(3);
+
 		WelcomeText.text = string.Format("欢迎你,{0}",PlayerDataManager.Instance.GetUserName());
 	}
 	

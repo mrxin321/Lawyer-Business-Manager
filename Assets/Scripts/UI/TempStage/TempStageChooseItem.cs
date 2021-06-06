@@ -10,16 +10,29 @@ public class TempStageChooseItem : MonoBehaviour
 
     [SerializeField] Text StageName;
 
-    private StageData StageData;
+    private StageData StageData;	
+    private int CaseId;
 
-    public void SetData(StageData stageData)
+    public void SetData(StageData stageData,int caseId)
     {
+    	if(stageData == null)
+    	{
+    		CaseId = caseId;
+    		StageName.text = "其他";
+    		return;
+    	}
     	StageData = stageData;
     	StageName.text = stageData.Name;
     }
 
     public void StateChoose()
     {
+    	if(StageData == null)
+    	{
+    		Utility.SafePostEvent(TempStageAddSuccess);
+    		UIManager.Instance.OpenWindow("StageEditView",CaseId);
+    		return;
+    	}
     	//添加阶段
     	Hashtable hashtable = new Hashtable();
 		hashtable.Add(0,StageData.Name);

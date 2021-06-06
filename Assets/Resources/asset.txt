@@ -35,6 +35,7 @@ testluaview:prefab:View/TestLuaView.prefab:assets___resources___view.resource
 bg:prefab:View/UIComponent/bg.prefab:assets___resources___view.resource
 button:prefab:View/UIComponent/Button.prefab:assets___resources___view.resource
 closebtn:prefab:View/UIComponent/CloseBtn.prefab:assets___resources___view.resource
+deletebtn:prefab:View/UIComponent/DeleteBtn.prefab:assets___resources___view.resource
 dropdown:prefab:View/UIComponent/Dropdown.prefab:assets___resources___view.resource
 selectitem:prefab:View/UIComponent/SelectItem.prefab:assets___resources___view.resource
 todoinputfield:prefab:View/UIComponent/TodoInputField.prefab:assets___resources___view.resource

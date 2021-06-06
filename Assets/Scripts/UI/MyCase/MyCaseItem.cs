@@ -44,6 +44,7 @@ public class MyCaseItem : MonoBehaviour
         var dataList = DataBase.GetDataList<StageData>(dataReader,"id","name","des","caseid","casetype");
         foreach(var data in dataList)
         {
+            Debug.LogFormat("wtf datao tat ata tat {0}",JsonUtility.ToJson(data));
             var copyItem = AssetManager.CreatePrefab("MyStageItem",StageRoot);
             var myStageItem = copyItem.GetComponent<MyStageItem>();
             if(myStageItem != null)

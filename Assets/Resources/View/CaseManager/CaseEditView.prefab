@@ -656,6 +656,7 @@ MonoBehaviour:
   Paytype: {fileID: 8372565069229542721}
   Paydes: {fileID: 5874258682779364689}
   TempStageRoot: {fileID: 8453241277238480634}
+  AddStageBtn: {fileID: 6032954742522677101}
 --- !u!1 &688006380358121322
 GameObject:
   m_ObjectHideFlags: 0
