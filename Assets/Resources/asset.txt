@@ -33,10 +33,12 @@ tempstageselectlistview:prefab:View/TemplateManager/TempStageSelectListView.pref
 temptasklistview:prefab:View/TemplateManager/TempTaskListView.prefab:assets___resources___view.resource
 testluaview:prefab:View/TestLuaView.prefab:assets___resources___view.resource
 bg:prefab:View/UIComponent/bg.prefab:assets___resources___view.resource
+button (1):prefab:View/UIComponent/Button (1).prefab:assets___resources___view.resource
 button:prefab:View/UIComponent/Button.prefab:assets___resources___view.resource
 closebtn:prefab:View/UIComponent/CloseBtn.prefab:assets___resources___view.resource
 deletebtn:prefab:View/UIComponent/DeleteBtn.prefab:assets___resources___view.resource
 dropdown:prefab:View/UIComponent/Dropdown.prefab:assets___resources___view.resource
+rigthtopbtn:prefab:View/UIComponent/RigthTopBtn.prefab:assets___resources___view.resource
 selectitem:prefab:View/UIComponent/SelectItem.prefab:assets___resources___view.resource
 todoinputfield:prefab:View/UIComponent/TodoInputField.prefab:assets___resources___view.resource
 userview:prefab:View/UserView/UserView.prefab:assets___resources___view.resource
