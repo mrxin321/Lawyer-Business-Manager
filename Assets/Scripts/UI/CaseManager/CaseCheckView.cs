@@ -53,7 +53,7 @@ public class CaseCheckView : BaseView
 			for(int i = 0;i<masterList.Count;i++)
 			{
 				str += masterList[i].UserName;
-				if(i < i-1)str+="、";
+				if(i < masterList.Count-1)str+="、";
 			}
 			if(str == "")str = "暂无负责人";
 
